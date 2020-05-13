@@ -3,6 +3,6 @@ class PagesController < ApplicationController
     # before_action :authenticate_user!
     
     def home 
-        render plain: 'Hello world'
+        # render plain: 'Hello world'
     end
 end
