@@ -67,3 +67,5 @@ gem 'jquery-rails'
 gem "devise", "~> 4.7"
 
 gem "aws-sdk-s3", "~> 1.64"
+
+gem "faker", "~> 2.11"
