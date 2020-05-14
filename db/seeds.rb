@@ -81,3 +81,55 @@ when "development"
     user.city = "Sydney"
     user.save!
 end
+
+# Seeding structure - user actions
+# Admin, Alice and Bob will create Listings only, will not have any purchases
+# Morgan and Ross will only be making Purchases, will not have any listings
+# Hugh will have both Listings and Purchases
+
+# Listing Seeds
+case Rails.env
+when "development"
+    # Alternate syntax that could be used instead of using input as ID
+    # User.first.listings.create(title: "BTC 4 Sale", description: "lorem ipsum", payment_method: "Credit Card", price_BTC_AUD:13000, amount: 4000)
+    title = "Bitcoin for sale"
+    description = "lorem ipsum"
+    payment_method = "Credit Card"
+
+    for i in 0..3
+        price_BTC_AUD = 13000
+        amount = 1000
+        
+        5.times do
+            Listing.create(user_id: i, title: title, description: description, payment_method: payment_method, price_BTC_AUD: price_BTC_AUD, amount: amount)
+            amount += 1000
+            price_BTC_AUD += 100
+        end
+    end
+
+end
+
+
+#Purchase Seeds - Purchase can only exist if Listing exists first - needs Listing ID
+
+# Seed makes it that Morgan and Ross both make two purchases
+case Rails.env
+when "development"
+    # Morgan purchase listing 1 but has not given feedback or had the BTC sent (user controlling listing updates btc_sent)
+    Purchase.create(user_id: 5, listing_id: 1, feedback_for_seller: nil, btc_sent: false)
+    # Morgan purchased listing 2 and received Bitcoin, gave negative feedback
+    Purchase.create(user_id: 5, listing_id: 2, feedback_for_seller: 0, btc_sent: true)
+    # Morgan purchased listing 3 and received Bitcoin, gave postive feedback
+    Purchase.create(user_id: 5, listing_id: 3, feedback_for_seller: 1, btc_sent: true)
+
+    # Ross purchased listing 7 but has not given feedback or had the BTC sent
+    Purchase.create(user_id: 6, listing_id: 7, feedback_for_seller: nil, btc_sent: false)
+    # Ross purchased listing 11, received Bitcoin but has not given feedback
+    Purchase.create(user_id: 6, listing_id: 11, feedback_for_seller: nil, btc_sent: true)
+end
+
+# Example: Checking if a Listing is purchased:
+# Purchase.where(listing_id: 1).empty?
+
+# Example: Updating a User Listing that BTC has been sent to the Purchase (owned by another User)
+# User.first.listings.first.purchase.update(btc_sent: true)
