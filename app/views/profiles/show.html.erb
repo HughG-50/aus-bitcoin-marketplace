@@ -1,0 +1,26 @@
+<h1> <%= @user.username %> </h1>
+
+<% if !@user.picture.attached? %>
+    <%= image_tag  "https://i.stack.imgur.com/34AD2.jpg"%>
+<% else %>
+    <%= image_tag @user.picture %>
+<% end %>
+
+<%= link_to  "Login Details", edit_user_registration_path(@user.id)%>
+<%= link_to  "Edit Profile", edit_profile_path(@user.id)%>
+
+<ul>
+    <li> Bitcoin address: <%= @user.btc_address %> </li>
+    <li> Bio: <%= @user.bio %> </li>
+</ul>
+
+<h3> Information on <%= @user.username %> </h3>
+
+<ul>
+    <li>Feedback Score: <%= @user.feedback_score %> </li>
+    <li>Number of BTC purchases: <%= @user.num_btc_purchases %> </li>
+    <li>Number of BTC listings sold: <%= @user.num_completed_listings %> </li>
+    <li>Account Created: <%= @user.created_at.strftime("%B %d, %Y") %> </li>
+    <li>Country: <%= @user.country %> </li>
+    <li>City: <%= @user.city %> </li>
+</ul>
