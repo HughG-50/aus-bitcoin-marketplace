@@ -1,0 +1,16 @@
+<h1>Listings</h1>
+<h2>Buy Bitcoins online with Australian Dollars (AUD)</h2>
+
+<% for listing in @listings %>
+    <ul>
+        <li>Title: <%= listing.title %></li>
+        <li>User: <%= listing.user.username %> </li>
+        <li>Reputation score: <%= listing.user.num_btc_purchases %>; <%= listing.user.feedback_score.round(1) %>% </li>
+        <li>Description: <%= listing.description %></li>
+        <li>Payment Method: <%= listing.payment_method %></li>
+        <li>Price (BTC/AUD): <%= number_to_currency(listing.price_BTC_AUD) %></li>
+        <li>Amount available (AUD): <%= number_to_currency(listing.amount) %></li>
+    </ul>
+
+
+<% end %>
