@@ -1,3 +1,9 @@
+<% if user_signed_in? %>
+    <%= link_to "logout", destroy_user_session_path, method: :delete %>
+<% else %>
+    <%= link_to "login", new_user_session_path %>
+<% end %>
+
 <h1>Listings</h1>
 <h2>Buy Bitcoins online with Australian Dollars (AUD)</h2>
 
@@ -10,7 +16,6 @@
         <li>Payment Method: <%= listing.payment_method %></li>
         <li>Price (BTC/AUD): <%= number_to_currency(listing.price_BTC_AUD) %></li>
         <li>Amount available (AUD): <%= number_to_currency(listing.amount) %></li>
+        <li> <%= link_to  "Buy", listing_path(listing.id)%> </li>
     </ul>
-
-
 <% end %>
