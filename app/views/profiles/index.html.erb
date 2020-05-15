@@ -12,9 +12,6 @@
     <%= image_tag @user.picture %>
 <% end %>
 
-<%= link_to  "Login Details", edit_user_registration_path(@user.id)%>
-<%= link_to  "Edit Profile", edit_profile_path(@user.id)%>
-
 <ul>
     <li> Bitcoin address: <%= @user.btc_address %> </li>
     <li> Bio: <%= @user.bio %> </li>

@@ -1,0 +1,33 @@
+<% if @user.errors.any? %>
+    <% @user.errors.full_messages.each do |error| %>
+        <p><%= error %></p>
+    <% end %>
+<% end %>
+
+<div>
+    <% # What does local: true do? %>
+    <%= form_with model: @user, local: true, method: :post do |form| %>
+        <% # Profile Picture Upload Form  - Displays default picture if no picture is uploaded already%>
+        <%= form.label :profile_picture %>
+            <% if !@user.picture.attached? %>
+                <%= image_tag  "https://i.stack.imgur.com/34AD2.jpg"%>
+            <% else %>
+                <%= image_tag @user.picture %>
+            <% end %>
+        <%= form.file_field :picture, accept: 'image/png,image/gif,image/jpeg,image/jpg' %>
+
+        <% # Bio Text Input Form %>
+        <%= form.label :bio %>
+        <%= form.text_area :bio, value: @user.bio, rows: "6" %>
+
+        <% # Forms for updating location %>
+        <%= form.label :country %>
+        <%= form.text_field :country %>
+
+        <%= form.label :city %>
+        <%= form.text_field :city %>
+
+        <% # Submit form%>
+        <%= form.submit "Update"%>
+    <% end %>
+</div>
