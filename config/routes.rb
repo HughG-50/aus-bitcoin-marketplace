@@ -3,6 +3,7 @@ Rails.application.routes.draw do
 
   # listings routes
   resources :listings
+  get "/listings/:id/show_basic", to: "listings#show_basic", as: "show_basic"
 
   # homepage route
   get "/", to: "pages#home", as: "root"

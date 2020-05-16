@@ -16,6 +16,10 @@
         <li>Payment Method: <%= listing.payment_method %></li>
         <li>Price (BTC/AUD): <%= number_to_currency(listing.price_BTC_AUD) %></li>
         <li>Amount available (AUD): <%= number_to_currency(listing.amount) %></li>
-        <li> <%= link_to  "Buy", listing_path(listing.id)%> </li>
+        <% if user_signed_in? %>
+            <li> <%= link_to  "View Listing", listing_path(listing.id)%> </li>
+        <% else %>
+            <li> <%= link_to  "View Listing", show_basic_path(listing.id)%> </li>
+        <% end %>
     </ul>
 <% end %>
