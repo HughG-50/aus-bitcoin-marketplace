@@ -1,5 +1,5 @@
 class PagesController < ApplicationController 
     def home 
-        @listings = Listing.all.order(price_BTC_AUD: :asc)
+        @listings = Listing.all.order(created_at: :desc)
     end
 end
