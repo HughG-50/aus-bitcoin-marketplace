@@ -1,5 +1,5 @@
 class PagesController < ApplicationController 
     def home 
-        # render plain: 'Hello world'
+        @listings = Listing.all.order(price_BTC_AUD: :asc)
     end
 end

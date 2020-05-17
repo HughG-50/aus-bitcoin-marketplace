@@ -5,3 +5,41 @@
 <% end %>
 
 <h1>Aus Bitcoin Marketplace</h1>
+
+<h5>Want Bitcoin?</h5>
+<h5>Buy it here</h5>
+
+<%= link_to "Find Sellers", listings_path %>
+
+<h3>About Aus Bitcoin Marketplace</h3>
+
+<p>Aus Bitcoin Marketplace is a portfolio project written by Hugh Greethead during the Coder Academy bootcamp.
+<br>
+It's purpose is to demonstrate a proof of concept for a simple e-commerce marketplace, with my personal interest in Bitcoin
+leading me to have my project loosely inspired by https://localbitcoins.com/. 
+</p>
+
+<p>
+DISCLAIMER: UNDER NO CIRCUMSTANCES IS THIS WEBSITE TO BE USED TO TRANSACT OR FACILITATE THE TRANSACTION OF BITCOIN OR ANY OTHER MONETARY INSTRUMENT.
+</p>
+
+<h3>New Listings</h3>
+
+<% @listings.take(2).each do |listing| %>
+    <ul>
+        <li>Title: <%= listing.title %></li>
+        <li>User: <%= listing.user.username %> </li>
+        <li>Reputation score: <%= listing.user.num_btc_purchases %>; <%= number_to_percentage(listing.user.feedback_score, precision: 1) %> </li>
+        <li>Description: <%= listing.description %></li>
+        <li>Payment Method: <%= listing.payment_method %></li>
+        <li>Price (BTC/AUD): <%= number_to_currency(listing.price_BTC_AUD) %></li>
+        <li>Amount available (AUD): <%= number_to_currency(listing.amount) %></li>
+        <% if user_signed_in? %>
+            <li> <%= link_to  "View Listing", listing_path(listing.id)%> </li>
+        <% else %>
+            <li> <%= link_to  "View Listing", show_basic_path(listing.id)%> </li>
+        <% end %>
+    </ul>
+<% end %>
+
+<%= link_to  "See more..", listings_path %>

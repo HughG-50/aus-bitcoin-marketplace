@@ -1,5 +1,7 @@
 class ListingsController < ApplicationController
   before_action :authenticate_user!, :except => [:index, :show_basic]
+  # before_action :set_user_listing, only: [:edit, :update, :destroy]
+  before_action :set_listing, only: [:show, :show_basic]
 
   def index
     @listings = Listing.all.order(price_BTC_AUD: :asc)
@@ -8,13 +10,11 @@ class ListingsController < ApplicationController
   # This will be where show redirects to if the current user is not signed in 
   # (i.e. show listing without the edit and delete options)
   def show_basic
-    set_listing
   end
 
   # By default this is the listing we will load when a user clicks on a listing
   # must be logged in
   def show
-    set_listing
   end
 
   def new
@@ -28,6 +28,7 @@ class ListingsController < ApplicationController
 
   def create
     @listing = current_user.listings.create(listing_params)
+
     if @listing.errors.any?
         render "new"
     else 
