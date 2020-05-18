@@ -1,3 +1,19 @@
 <h1>Dashboard</h1>
 
 <h3>Completed Listings</h3>
+
+<% for listing in @listings %>
+    <ul>
+        <li>Listing ID: <%= listing.id %> </li>
+        <li>Title: <%= listing.title %> </li>
+        <li>Listing Created At: <%= listing.created_at.strftime("%B %d, %Y") %> </li>
+        <li>Price (BTC/AUD): <%= number_to_currency(listing.price_BTC_AUD) %></li>
+        <li>Amount (AUD): <%= number_to_currency(listing.amount) %></li>
+        <%# Create simple logic here to display tick or cross, or thumbs up or thumbs down depending on whether feedback positive or negative %>
+        <% if listing.purchase.feedback_for_seller == nil %>
+            <li>Feedback from buyer: Waiting for buyer feedback.. </li>
+        <% else %>
+            <li>Feedback from buyer: <%= listing.purchase.feedback_for_seller %> </li>
+        <% end %>
+    </ul>
+<% end %>

@@ -27,6 +27,7 @@
 <% if current_user == @listing.user %>
     <%= link_to "edit", edit_listing_path(@listing.id) %>
 
+    <%# Should this error check be in the controller?%>
     <% if @listing.status == "available_listing" %>
         <%= form_with model: @listing, local: true, method: "delete" do |form| %>
             <%= submit_tag "delete" %>
