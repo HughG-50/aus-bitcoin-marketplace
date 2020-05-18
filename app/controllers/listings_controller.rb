@@ -22,14 +22,14 @@ class ListingsController < ApplicationController
     # Hardcoding that payments must be CC until functionality to other payments is expanded
     # NEED TO CHECK WHETHER THIS IS VALID TO DO LIKE THIS
     # Also check User ID whether it needs to be in the input
-    @listing.payment_method = "Credit Card"
-    @listing.save!
+    # @listing.payment_method = "Credit Card"
+    
   end
 
   def create 
     @listing = current_user.listings.create(listing_params)
     p params 
-    
+
     if @listing.errors.any?
         render "new"
     else 

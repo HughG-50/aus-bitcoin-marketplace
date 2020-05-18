@@ -11,19 +11,24 @@ class DashboardsController < ApplicationController
     end
 
     def pending_listings_update
+        # debug line
+        p "***********************"
         set_user
-        p params 
-        @listing = @user.listings.find_by_id(params[:id])
         # @listing = Listing.update(params[:id], listing_params)
+        @listing = @user.listings.find(params[:id]).update(listing_params)
         if @listing.errors.any?
             render "pending_listings_index"
         else 
+            # debug line
+            p "***********************"
             redirect_to completed_listings_path
         end
     end
 
     def current_listings_index
-
+        set_user
+        @listings = Listing.where(nil)
+        @listings = @user.listings.filter_by_status(:available_listing)
     end
 
     def completed_listings_index
@@ -48,7 +53,7 @@ class DashboardsController < ApplicationController
     end
 
     def listing_params
-        # params.require(:listing).permit(:title, :description, :payment_method, :price_BTC_AUD, :amount, :user_id, :status)
+        params.require(:listing).permit(:title, :description, :payment_method, :price_BTC_AUD, :amount, :user_id, :status)
     end
 
 

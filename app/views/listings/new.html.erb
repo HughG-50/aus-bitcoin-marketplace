@@ -27,6 +27,9 @@
         <%= form.number_field :amount %>
     </div>
 
+    <%= form.hidden_field :payment_method, value: "Credit Card" %>
+    <%= form.hidden_field :status, value: :available_listing %>
+
     <div>
         <%= form.submit %>
     </div>

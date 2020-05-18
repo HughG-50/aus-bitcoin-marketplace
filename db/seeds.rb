@@ -121,12 +121,17 @@ when "development"
     listing.status = :pending_completion
     listing.save!
     # Morgan purchased listing 2 and received Bitcoin, gave negative feedback
-    Purchase.create(user_id: 5, listing_id: 2, feedback_for_seller: :negative, btc_sent: :sent)
+    Purchase.create(user_id: 5, listing_id: 2, feedback_for_seller: nil, btc_sent: :not_sent)
     listing = Listing.find(2)
+    listing.status = :pending_completion
+    listing.save!
+    # Morgan purchased listing 3 and received Bitcoin, gave postive feedback
+    Purchase.create(user_id: 5, listing_id: 3, feedback_for_seller: :negative, btc_sent: :sent)
+    listing = Listing.find(3)
     listing.status = :completed_listing
     listing.save!
     # Morgan purchased listing 3 and received Bitcoin, gave postive feedback
-    Purchase.create(user_id: 5, listing_id: 3, feedback_for_seller: :positive, btc_sent: :sent)
+    Purchase.create(user_id: 5, listing_id: 4, feedback_for_seller: :positive, btc_sent: :sent)
     listing = Listing.find(3)
     listing.status = :completed_listing
     listing.save!

@@ -10,7 +10,7 @@ Rails.application.routes.draw do
 
   # profile page routes
   get "/profile/:id", to: "profiles#index", as: "user"
-  get "/profile/:id/show", to: "profiles#show"
+  get "/profile/:id/show", to: "profiles#show", as: "user_show"
   put "/profile/:id", to: "profiles#edit"
   patch "/profile/:id", to: "profiles#edit"
   post "/profile/:id", to: "profiles#update"
@@ -19,7 +19,7 @@ Rails.application.routes.draw do
   # Dashboard routes - not sure if any of these need dynamic routes - e.g. /dashboard/:id/pending_listings because they all rely on/only can be accessed by the signed in current user
   get "/dashboard/pending_listings/", to: "dashboards#pending_listings_index", as: "pending_listings"
   put "/dashboard/pending_listings/:id", to: "dashboards#pending_listings_update"
-  patch "/dashboard/pending_listings/:id", to: "dashboards#pending_listings_update"
+  patch "/dashboard/pending_listings/:id", to: "dashboards#pending_listings_update", as: "pending_listings_update"
   # post "/dashboard/pending_listings", to: "dashboards#pending_listings_update"
 
   get "/dashboard/current_listings", to: "dashboards#current_listings_index", as: "current_listings"

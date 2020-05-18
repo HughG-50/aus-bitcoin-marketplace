@@ -28,7 +28,7 @@ class ProfilesController < ApplicationController
         if @user.errors.any?
             render "edit"
         else
-            redirect_to user_path
+            redirect_to user_show_path
         end
     end
 
