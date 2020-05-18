@@ -7,7 +7,7 @@ class DashboardsController < ApplicationController
         @listings = Listing.where(nil) #creates an anonymous scope - why is this necessary? (Is this like initialising it?)
         # Is it safe to do it like this compared to the example using the params here
         # @listings = @user.listings.filter_by_status(params[:status]) if params[:status].present?
-        @listings = @user.listings.filter_by_status(:pending_completion)
+        @listings = @user.listings.filter_by_status("pending_completion")
     end
 
     def pending_listings_update
@@ -25,14 +25,16 @@ class DashboardsController < ApplicationController
         end
     end
 
-    def current_listings_index
+    def available_listings_index
         set_user
         @listings = Listing.where(nil)
-        @listings = @user.listings.filter_by_status(:available_listing)
+        @listings = @user.listings.filter_by_status("available_listing")
     end
 
     def completed_listings_index
-
+        set_user
+        @listings = Listing.where(nil)
+        @listings = @user.listings.filter_by_status("completed_listing")
     end
 
     # Buyer dashboard

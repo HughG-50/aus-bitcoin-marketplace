@@ -1,10 +1,12 @@
 class ListingsController < ApplicationController
   before_action :authenticate_user!, :except => [:index, :show_basic]
-  # before_action :set_user_listing, only: [:edit, :update, :destroy]
   before_action :set_listing, only: [:show, :show_basic]
 
   def index
-    @listings = Listing.all.order(price_BTC_AUD: :asc)
+    # @listings = Listing.all.order(price_BTC_AUD: :asc)
+
+    # Only shows available listings rather than all listings
+    @listings = Listing.filter_by_status("available_listing").order(price_BTC_AUD: :asc)
   end
 
   # This will be where show redirects to if the current user is not signed in 
@@ -19,11 +21,6 @@ class ListingsController < ApplicationController
 
   def new
     @listing = Listing.new
-    # Hardcoding that payments must be CC until functionality to other payments is expanded
-    # NEED TO CHECK WHETHER THIS IS VALID TO DO LIKE THIS
-    # Also check User ID whether it needs to be in the input
-    # @listing.payment_method = "Credit Card"
-    
   end
 
   def create 
@@ -46,7 +43,9 @@ class ListingsController < ApplicationController
     if @listing.errors.any?
         render "edit"
     else 
-        redirect_to listings_path
+        # redirect_to listings_path
+        # redirect_to show_basic_path(@listing.id)
+        redirect_to listing_path(@listing.id)
     end
   end
 

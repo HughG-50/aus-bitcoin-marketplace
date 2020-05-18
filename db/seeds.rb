@@ -99,9 +99,10 @@ when "development"
     for i in 0..3
         price_BTC_AUD = 13000
         amount = 1000
+        status = :available_listing
         
-        5.times do
-            Listing.create(user_id: i, title: title, description: description, payment_method: payment_method, price_BTC_AUD: price_BTC_AUD, amount: amount, status: :available_listing)
+        6.times do
+            Listing.create(user_id: i, title: title, description: description, payment_method: payment_method, price_BTC_AUD: price_BTC_AUD, amount: amount, status: status)
             amount += 1000
             price_BTC_AUD += 100
         end
@@ -132,7 +133,7 @@ when "development"
     listing.save!
     # Morgan purchased listing 3 and received Bitcoin, gave postive feedback
     Purchase.create(user_id: 5, listing_id: 4, feedback_for_seller: :positive, btc_sent: :sent)
-    listing = Listing.find(3)
+    listing = Listing.find(4)
     listing.status = :completed_listing
     listing.save!
 

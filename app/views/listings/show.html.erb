@@ -16,14 +16,22 @@
     <li> Payment Method: <%= @listing.payment_method %> </li>
     <li> Location: <%= @listing.user.city %>, <%= @listing.user.country %> </li>
     <li> Description: <%= @listing.description %> </li>
-    <li> Make Payment (Stripe FORMS TO BE ADDED) </li>
+
+    <%#User shouldn't be able to buy their own listing%>
+    <%# if current_user.id != @listing.user.id %>
+    
+        
+  
 </ul>
 
-<% if current_user.id == @listing.user.id %>
+<% if current_user == @listing.user %>
     <%= link_to "edit", edit_listing_path(@listing.id) %>
 
-    <%= form_with model: @listing, local: true, method: "delete" do |form| %>
-        <%= submit_tag "delete"%>
+    <% if @listing.status == "available_listing" %>
+        <%= form_with model: @listing, local: true, method: "delete" do |form| %>
+            <%= submit_tag "delete" %>
+        <% end %>
     <% end %>
+<% else %>
+    Make Payment (Stripe FORMS TO BE ADDED/Pay now button) 
 <% end %>
-

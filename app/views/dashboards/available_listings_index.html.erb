@@ -1,0 +1,22 @@
+<h1>Dashboard</h1>
+
+<h3>Available Listings</h3>
+
+<% for listing in @listings %>
+    <ul>
+        <li> <%= link_to  "View Listing", listing_path(listing.id)%> </li>
+        <li>Listing ID: <%= listing.id %> </li>
+        <li>Title: <%= listing.title %> </li>
+        <li>Listing Created At: <%= listing.created_at.strftime("%B %d, %Y") %> </li>
+        <%# need to access purchase user%>
+        <li>Amount (AUD): <%= number_to_currency(listing.amount) %></li>
+        <li>Price (BTC/AUD): <%= number_to_currency(listing.price_BTC_AUD) %></li>
+        
+        <%= link_to "edit", edit_listing_path(listing.id) %>
+
+        <%# This form also uses the action in the listings controller, not the one in dashboards_controller (but in this case I haven't given it a dashboards_controller method) %>
+        <%= form_with model: listing, local: true, method: "delete" do |form| %>
+            <%= submit_tag "delete"%>
+        <% end %>
+    </ul>
+<% end %>

@@ -22,7 +22,7 @@ Rails.application.routes.draw do
   patch "/dashboard/pending_listings/:id", to: "dashboards#pending_listings_update", as: "pending_listings_update"
   # post "/dashboard/pending_listings", to: "dashboards#pending_listings_update"
 
-  get "/dashboard/current_listings", to: "dashboards#current_listings_index", as: "current_listings"
+  get "/dashboard/available_listings", to: "dashboards#available_listings_index", as: "available_listings"
   get "/dashboard/completed_listings", to: "dashboards#completed_listings_index", as: "completed_listings"
   get "/dashboard/current_purchase_orders", to: "dashboards#current_purchase_orders_index", as: "current_purchase_orders"
   get "/dashboard/purchase_history", to: "dashboards#purchase_history_index", as: "purchase_history"
