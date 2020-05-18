@@ -138,7 +138,7 @@ when "development"
     listing.save!
 
     # Ross purchased listing 7 but has not given feedback or had the BTC sent
-    Purchase.create(user_id: 6, listing_id: 7, feedback_for_seller: nil, btc_sent: :sent)
+    Purchase.create(user_id: 6, listing_id: 7, feedback_for_seller: nil, btc_sent: :not_sent)
     listing = Listing.find(7)
     listing.status = :pending_completion
     listing.save!

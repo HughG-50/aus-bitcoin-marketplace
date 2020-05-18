@@ -2,6 +2,15 @@
 
 <h3>Pending Listings</h3>
 
+<h6>Sellers</h6>
+<%= link_to "Pending Listing Completions", pending_listings_path %> |
+<%= link_to "Available Listings", available_listings_path %> | 
+<%= link_to "Completed Listings", completed_listings_path %>
+
+<h6>Buyers</h6>
+<%= link_to "Current Purchase Orders", current_purchase_orders_path %> | 
+<%= link_to "Purchase History", purchase_history_path %>
+
 <% for listing in @listings %>
     <ul>
         <li>Listing ID: <%= listing.id %> </li>
@@ -9,11 +18,12 @@
         <li>Listing Created At: <%= listing.created_at.strftime("%B %d, %Y") %> </li>
         <%# need to access purchase user%>
         <li>User: <%= listing.purchase.user.username %> </li>
-        <li>Amount paid (AUD): <%= number_to_currency(listing.amount) %></li>
         <li>Price (BTC/AUD): <%= number_to_currency(listing.price_BTC_AUD) %></li>
-        <li>BTC Due: <%= (listing.amount/listing.price_BTC_AUD).to_f.round(9) %></li>
+        <li>Amount paid (AUD): <%= number_to_currency(listing.amount) %></li>
+        <li>BTC Due: <%= (((listing.amount).to_f)/((listing.price_BTC_AUD).to_f)).round(9) %></li>
         <li>BTC Adress: <%= listing.purchase.user.btc_address %></li>
         <% # Form that updates status Enum from :pending_listing to :completed_listing %>
+        <% # ALSO NEEDS TO UPDATE THE ASSOCIATED PURCHASE BTC_SENT FIELD %>
         <%= form_with model: listing, local: true, method: :patch do |form| %>
             <%= form.hidden_field :status, value: :completed_listing %>
             <%= form.submit "I have sent BTC"%>
