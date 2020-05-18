@@ -3,8 +3,23 @@ class DashboardsController < ApplicationController
 
     # Seller dashboard
     def pending_listings_index
-        set_user_listing
+        set_user
+        @listings = Listing.where(nil) #creates an anonymous scope - why is this necessary? (Is this like initialising it?)
+        # Is it safe to do it like this compared to the example using the params here
+        # @listings = @user.listings.filter_by_status(params[:status]) if params[:status].present?
+        @listings = @user.listings.filter_by_status(:pending_completion)
+    end
 
+    def pending_listings_update
+        set_user
+        p params 
+        @listing = @user.listings.find_by_id(params[:id])
+        # @listing = Listing.update(params[:id], listing_params)
+        if @listing.errors.any?
+            render "pending_listings_index"
+        else 
+            redirect_to completed_listings_path
+        end
     end
 
     def current_listings_index
@@ -27,28 +42,23 @@ class DashboardsController < ApplicationController
 
     private
 
-    def set_user_listing
+    def set_user
         # only logged in user accesses Dashboard pages
         @user = current_user
-        # @listings = current_user.listings
+    end
 
-        # NOT SURE WHAT THIS DOES
-        # Listings that have had purchase made - i.e. a listing that has a Purchase object
-        # @listings_purchased = current_user.listings.includes(:purchase)
+    def listing_params
+        # params.require(:listing).permit(:title, :description, :payment_method, :price_BTC_AUD, :amount, :user_id, :status)
+    end
 
-        # NEED TO FIND COMMANDS FOR RETURNING LIST OF LISTINGS THAT HAVE PURCHASE OBJECTS (I.E. BEEN PURCHASED)
-        # -use .group perhaps?
-        # COMMAND FOR RETURNING LIST OF PURCHASES ASSOCIATED WITH LISTINGS LIST
-        
 
-        # boolean check
-        # Purchase.where(listing_id: 1).empty?
-        # Or
-        # Purchase.exists?(:purchase_id)
-        # 
-        # Does purchase exist where BTC is sent?
-        # Purchase.exists?(:conditions => "BTC_sent = true")
-     end
-
+    # NOTES:
+    # @listings = current_user.listings
+    # boolean check
+    # Purchase.where(listing_id: 1).empty?
+    # Or
+    # Purchase.exists?(:purchase_id)
+    # Does purchase exist where BTC is sent?
+    # Purchase.exists?(:conditions => "BTC_sent = true")
 
 end

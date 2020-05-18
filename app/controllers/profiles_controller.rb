@@ -21,4 +21,21 @@ class ProfilesController < ApplicationController
             @user = current_user
         end
     end
+
+    def update 
+        @user = User.update(params[:id], user_params)
+
+        if @user.errors.any?
+            render "edit"
+        else
+            redirect_to user_path
+        end
+    end
+
+    private 
+
+    def user_params
+        params.require(:user).permit(:username, :bio, :btc_address, :feedback_score, :num_btc_purchases, :num_completed_listings, :country, :city)
+    end
+    
 end

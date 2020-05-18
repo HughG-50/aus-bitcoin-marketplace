@@ -26,9 +26,10 @@ class ListingsController < ApplicationController
     @listing.save!
   end
 
-  def create
+  def create 
     @listing = current_user.listings.create(listing_params)
-
+    p params 
+    
     if @listing.errors.any?
         render "new"
     else 
@@ -41,7 +42,7 @@ class ListingsController < ApplicationController
   end
 
   def update
-    @listing = Listing.update(params["id"], listing_params)
+    @listing = Listing.update(params[:id], listing_params)
     if @listing.errors.any?
         render "edit"
     else 
@@ -51,7 +52,7 @@ class ListingsController < ApplicationController
 
   # TO DO // Consider changing redirect to dashboard once its been implemented
   def destroy
-    Listing.find(params["id"]).destroy
+    Listing.find(params[:id]).destroy
     
     redirect_to listings_path
   end
@@ -63,7 +64,7 @@ class ListingsController < ApplicationController
   end
 
   def listing_params
-    params.require(:listing).permit(:title, :description, :payment_method, :price_BTC_AUD, :amount, :user_id)
+    params.require(:listing).permit(:title, :description, :payment_method, :price_BTC_AUD, :amount, :user_id, :status)
   end
 
   def set_user_listing
