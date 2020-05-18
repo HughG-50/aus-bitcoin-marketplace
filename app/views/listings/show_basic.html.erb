@@ -1,15 +1,9 @@
-<% if user_signed_in? %>
-    <%= link_to "logout", destroy_user_session_path, method: :delete %>
-<% else %>
-    <%= link_to "login", new_user_session_path %>
-<% end %>
-
 <h2>Buy Bitcoins</h2>
 
 <h4> <%= @listing.title %> </h4>
 
 <ul>
-    <li> <%= @listing.user.username %> </li>
+    <li> <%= link_to "#{@listing.user.username}",  user_path(@listing.user.id) %> </li>
     <li> <%= number_to_percentage(@listing.user.feedback_score, precision: 1) %>, <%= @listing.user.num_completed_listings %> listings</li>
     <li> Price/BTC: <%= number_to_currency(@listing.price_BTC_AUD) %> </li>
     <li> Amount: <%= number_to_currency(@listing.amount) %> </li>
