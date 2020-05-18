@@ -30,13 +30,16 @@ class DashboardsController < ApplicationController
     def set_user_listing
         # only logged in user accesses Dashboard pages
         @user = current_user
-        @listings = current_user.listings
+        # @listings = current_user.listings
 
+        # NOT SURE WHAT THIS DOES
         # Listings that have had purchase made - i.e. a listing that has a Purchase object
         # @listings_purchased = current_user.listings.includes(:purchase)
 
         # NEED TO FIND COMMANDS FOR RETURNING LIST OF LISTINGS THAT HAVE PURCHASE OBJECTS (I.E. BEEN PURCHASED)
+        # -use .group perhaps?
         # COMMAND FOR RETURNING LIST OF PURCHASES ASSOCIATED WITH LISTINGS LIST
+        
 
         # boolean check
         # Purchase.where(listing_id: 1).empty?

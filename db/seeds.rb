@@ -101,7 +101,7 @@ when "development"
         amount = 1000
         
         5.times do
-            Listing.create(user_id: i, title: title, description: description, payment_method: payment_method, price_BTC_AUD: price_BTC_AUD, amount: amount)
+            Listing.create(user_id: i, title: title, description: description, payment_method: payment_method, price_BTC_AUD: price_BTC_AUD, amount: amount, status: :available_listing)
             amount += 1000
             price_BTC_AUD += 100
         end
@@ -116,16 +116,31 @@ end
 case Rails.env
 when "development"
     # Morgan purchase listing 1 but has not given feedback or had the BTC sent (user controlling listing updates btc_sent)
-    Purchase.create(user_id: 5, listing_id: 1, feedback_for_seller: nil, btc_sent: false)
+    Purchase.create(user_id: 5, listing_id: 1, feedback_for_seller: nil, btc_sent: :not_sent)
+    listing = Listing.find(1)
+    listing.status = :pending_completion
+    listing.save!
     # Morgan purchased listing 2 and received Bitcoin, gave negative feedback
-    Purchase.create(user_id: 5, listing_id: 2, feedback_for_seller: 0, btc_sent: true)
+    Purchase.create(user_id: 5, listing_id: 2, feedback_for_seller: :negative, btc_sent: :sent)
+    listing = Listing.find(2)
+    listing.status = :completed_listing
+    listing.save!
     # Morgan purchased listing 3 and received Bitcoin, gave postive feedback
-    Purchase.create(user_id: 5, listing_id: 3, feedback_for_seller: 1, btc_sent: true)
+    Purchase.create(user_id: 5, listing_id: 3, feedback_for_seller: :positive, btc_sent: :sent)
+    listing = Listing.find(3)
+    listing.status = :completed_listing
+    listing.save!
 
     # Ross purchased listing 7 but has not given feedback or had the BTC sent
-    Purchase.create(user_id: 6, listing_id: 7, feedback_for_seller: nil, btc_sent: false)
+    Purchase.create(user_id: 6, listing_id: 7, feedback_for_seller: nil, btc_sent: :sent)
+    listing = Listing.find(7)
+    listing.status = :pending_completion
+    listing.save!
     # Ross purchased listing 11, received Bitcoin but has not given feedback
-    Purchase.create(user_id: 6, listing_id: 11, feedback_for_seller: nil, btc_sent: true)
+    Purchase.create(user_id: 6, listing_id: 11, feedback_for_seller: nil, btc_sent: :sent)
+    listing = Listing.find(11)
+    listing.status = :completed_listing
+    listing.save!
 end
 
 # Example: Checking if a Listing is purchased:
