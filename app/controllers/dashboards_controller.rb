@@ -55,8 +55,7 @@ class DashboardsController < ApplicationController
         @purchase = @user.purchases.find(params[:id])
         @purchase.update(feedback_for_seller: params[:feedback_for_seller])
 
-
-        
+        # TO DO // Need to update with feedback_score calculation logic or method later
         updated_feedback_score = 50
         @purchase.listing.user.update(feedback_score: updated_feedback_score)
       
