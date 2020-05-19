@@ -23,8 +23,7 @@
         
         <%= link_to "edit", edit_listing_path(listing.id) %>
 
-        <%# This form also uses the action in the listings controller, not the one in dashboards_controller (but in this case I haven't given it a dashboards_controller method) %>
-        <%= form_with model: listing, local: true, method: "delete" do |form| %>
+        <%= form_with url: delete_available_listing_path(listing.id), local: true, method: :delete do |form| %>
             <%= submit_tag "delete"%>
         <% end %>
     </ul>

@@ -11,24 +11,24 @@ class DashboardsController < ApplicationController
         @listings = @user.listings.filter_by_status("pending_completion")
     end
 
-    # ALSO N
     def pending_listings_update
-        # debug line
-        p "***********************"
-        # @listing = Listing.update(params[:id], listing_params)
-        @listing = @user.listings.find(params[:id]).update(listing_params)
-        if @listing.errors.any?
-            render "pending_listings_index"
-        else 
-            # debug line
-            p "***********************"
-            redirect_to completed_listings_path
-        end
+        @listing = @user.listings.find(params[:id])
+        @listing.update(status: params[:status])
+        @listing.purchase.update(btc_sent: "sent")
+      
+        redirect_to completed_listings_path
     end
 
     def available_listings_index
         @listings = Listing.where(nil)
         @listings = @user.listings.filter_by_status("available_listing")
+    end
+
+    def available_listings_destroy
+        @listing = @user.listings.find(params[:id])
+        @listing.destroy
+        
+        redirect_to available_listings_path
     end
 
     def completed_listings_index
