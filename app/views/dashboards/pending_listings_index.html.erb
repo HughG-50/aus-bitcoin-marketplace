@@ -23,7 +23,6 @@
         <li>BTC Due: <%= (((listing.amount).to_f)/((listing.price_BTC_AUD).to_f)).round(9) %></li>
         <li>BTC Adress: <%= listing.purchase.user.btc_address %></li>
         <% # Form that updates status Enum from :pending_listing to :completed_listing %>
-        <% # ALSO NEEDS TO UPDATE THE ASSOCIATED PURCHASE BTC_SENT FIELD %>
         <%= form_with url: pending_listings_update_path(listing.id), local: true, method: :patch do |form| %>
             <%= form.hidden_field :status, value: :completed_listing %>
             <%= form.submit "I have sent BTC"%>

@@ -15,6 +15,8 @@ class DashboardsController < ApplicationController
         @listing = @user.listings.find(params[:id])
         @listing.update(status: params[:status])
         @listing.purchase.update(btc_sent: "sent")
+        num_of_completed_listings = @listing.user.num_completed_listings += 1
+        @listing.user.update(num_completed_listings: num_of_completed_listings)
       
         redirect_to completed_listings_path
     end
@@ -27,7 +29,7 @@ class DashboardsController < ApplicationController
     def available_listings_destroy
         @listing = @user.listings.find(params[:id])
         @listing.destroy
-        
+
         redirect_to available_listings_path
     end
 
@@ -46,6 +48,19 @@ class DashboardsController < ApplicationController
         @purchases = Purchase.where(nil)
         @purchases = @user.purchases.filter_by_btc_sent("sent")
         @feedback_for_sellers = Purchase.feedback_for_sellers.keys
+    end
+
+    # Update purchase to give feedback for purchase and update listing owner feedback score
+    def purchase_user_feedback_update
+        @purchase = @user.purchases.find(params[:id])
+        @purchase.update(feedback_for_seller: params[:feedback_for_seller])
+
+
+        
+        updated_feedback_score = 50
+        @purchase.listing.user.update(feedback_score: updated_feedback_score)
+      
+        redirect_to purchase_history_path
     end
 
 

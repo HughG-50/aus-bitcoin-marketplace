@@ -121,32 +121,66 @@ when "development"
     listing = Listing.find(1)
     listing.status = :pending_completion
     listing.save!
+
+    purchase = Purchase.find(1)
+    number_of_purchases = purchase.user.num_btc_purchases + 1
+    purchase.user.update(num_btc_purchases: number_of_purchases)
+
     # Morgan purchased listing 2 and received Bitcoin, gave negative feedback
     Purchase.create(user_id: 5, listing_id: 2, feedback_for_seller: nil, btc_sent: :not_sent)
     listing = Listing.find(2)
     listing.status = :pending_completion
     listing.save!
+
+    purchase = Purchase.find(2)
+    number_of_purchases = purchase.user.num_btc_purchases + 1
+    purchase.user.update(num_btc_purchases: number_of_purchases)
+
     # Morgan purchased listing 3 and received Bitcoin, gave postive feedback
     Purchase.create(user_id: 5, listing_id: 3, feedback_for_seller: :negative, btc_sent: :sent)
     listing = Listing.find(3)
     listing.status = :completed_listing
+    number_of_completed_listings = listing.user.num_completed_listings + 1
+    listing.user.update(num_completed_listings: number_of_completed_listings)
     listing.save!
+
+    purchase = Purchase.find(3)
+    number_of_purchases = purchase.user.num_btc_purchases + 1
+    purchase.user.update(num_btc_purchases: number_of_purchases)
+
     # Morgan purchased listing 3 and received Bitcoin, gave postive feedback
     Purchase.create(user_id: 5, listing_id: 4, feedback_for_seller: :positive, btc_sent: :sent)
     listing = Listing.find(4)
     listing.status = :completed_listing
+    number_of_completed_listings = listing.user.num_completed_listings + 1
+    listing.user.update(num_completed_listings: number_of_completed_listings)
     listing.save!
+
+    purchase = Purchase.find(4)
+    number_of_purchases = purchase.user.num_btc_purchases + 1
+    purchase.user.update(num_btc_purchases: number_of_purchases)
 
     # Ross purchased listing 7 but has not given feedback or had the BTC sent
     Purchase.create(user_id: 6, listing_id: 7, feedback_for_seller: nil, btc_sent: :not_sent)
     listing = Listing.find(7)
     listing.status = :pending_completion
     listing.save!
+
+    purchase = Purchase.find(5)
+    number_of_purchases = purchase.user.num_btc_purchases + 1
+    purchase.user.update(num_btc_purchases: number_of_purchases)
+
     # Ross purchased listing 11, received Bitcoin but has not given feedback
     Purchase.create(user_id: 6, listing_id: 11, feedback_for_seller: nil, btc_sent: :sent)
     listing = Listing.find(11)
     listing.status = :completed_listing
+    number_of_completed_listings = listing.user.num_completed_listings + 1
+    listing.user.update(num_completed_listings: number_of_completed_listings)
     listing.save!
+
+    purchase = Purchase.find(6)
+    number_of_purchases = purchase.user.num_btc_purchases + 1
+    purchase.user.update(num_btc_purchases: number_of_purchases)
 end
 
 # Example: Checking if a Listing is purchased:
