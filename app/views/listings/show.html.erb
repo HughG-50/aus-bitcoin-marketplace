@@ -23,5 +23,9 @@
     <% end %>
 <% elsif current_user == @listing.user%>
 <% else %>
-    Make Payment (Stripe FORMS TO BE ADDED/Pay now button) 
+    (Stripe FORMS TO BE ADDED) 
+    <%= form_with url: create_purchase_path(@listing.id), local: true, method: :post do |form|%>
+        <%= form.submit "Buy"%>
+    <% end %>
 <% end %>
+

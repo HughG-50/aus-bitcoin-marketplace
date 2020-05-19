@@ -25,7 +25,6 @@ class ListingsController < ApplicationController
 
   def create 
     @listing = current_user.listings.create(listing_params)
-    p params 
 
     if @listing.errors.any?
         render "new"
@@ -49,11 +48,26 @@ class ListingsController < ApplicationController
     end
   end
 
+  # Create a purchase object for a listing
+  def create_purchase 
+    listing_id = params[:id]
+    @listing = Listing.find(listing_id)
+    user_id = @listing.user.id
+
+    @purchase = current_user.purchases.create(user_id: user_id, listing_id: listing_id, btc_sent: "not_sent")
+    @listing.update(status: "pending_completion")
+    # p params 
+
+    redirect_to current_purchase_orders_path
+  end
+
+
   # TO DO // Consider changing redirect to dashboard once its been implemented
   def destroy
     Listing.find(params[:id]).destroy
     
-    redirect_to listings_path
+    # redirect_to listings_path
+    redirect_to available_listings_path
   end
 
   private 
@@ -74,5 +88,9 @@ class ListingsController < ApplicationController
       redirect_to listings_path
     end
   end
+
+  # def purchase_params
+  #   params.require(:purchase).permit(:user_id, :listing_id, :btc_sent)
+  # end
 
 end

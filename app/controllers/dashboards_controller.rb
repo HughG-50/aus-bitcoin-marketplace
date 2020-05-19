@@ -51,20 +51,19 @@ class DashboardsController < ApplicationController
 
     # Once purchase is made, update feedback for listing and the owners feedback_score
     def user_feedback_update
-        @purchase = @user.purchases.find(params[:id])
-        @listing = @purchase.listing
+        @listing = Listing.find(params[:id])
         @listing.update(feedback_for_seller: params[:feedback_for_seller])
 
         @listings = Listing.where(nil)
-        @listings = @purchase.listing.user.listings.filter_by_status("completed_listing")
+        @listings = @listing.user.listings.filter_by_status("completed_listing")
         num_of_seller_completed_listings = @listings.count
         
         @listings = Listing.where(nil)
-        @listings = @purchase.listing.user.listings.filter_by_feedback_for_seller("positive")
+        @listings = @listing.user.listings.filter_by_feedback_for_seller("positive")
         num_of_seller_positive_feedback_listings = @listings.count
 
         updated_user_feedback_score = (num_of_seller_positive_feedback_listings/num_of_seller_completed_listings.to_f)
-        @purchase.listing.user.update(feedback_score: updated_user_feedback_score)
+        @listing.user.update(feedback_score: updated_user_feedback_score)
       
         redirect_to purchase_history_path
     end

@@ -1,14 +1,15 @@
 Rails.application.routes.draw do
   devise_for :users
 
-  # listings routes
+  # Listings routes
   resources :listings
   get "/listings/:id/show_basic", to: "listings#show_basic", as: "show_basic"
+  post "/listings/:id", to: "listings#create_purchase", as: "create_purchase"
 
-  # homepage route
+  # Homepage route
   get "/", to: "pages#home", as: "root"
 
-  # profile page routes
+  # Profile page routes
   get "/profile/:id", to: "profiles#index", as: "user"
   get "/profile/:id/show", to: "profiles#show", as: "user_show"
   put "/profile/:id", to: "profiles#edit"
@@ -16,7 +17,7 @@ Rails.application.routes.draw do
   post "/profile/:id", to: "profiles#update"
   get "/profile/:id/edit", to: "profiles#edit", as: "edit_profile"
 
-  # Dashboard routes - not sure if any of these need dynamic routes - e.g. /dashboard/:id/pending_listings because they all rely on/only can be accessed by the signed in current user
+  # Dashboard routes 
   get "/dashboard/pending_listings/", to: "dashboards#pending_listings_index", as: "pending_listings"
   put "/dashboard/pending_listings/:id", to: "dashboards#pending_listings_update"
   patch "/dashboard/pending_listings/:id", to: "dashboards#pending_listings_update", as: "pending_listings_update"
