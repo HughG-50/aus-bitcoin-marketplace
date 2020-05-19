@@ -28,6 +28,6 @@ Rails.application.routes.draw do
   get "/dashboard/current_purchase_orders", to: "dashboards#current_purchase_orders_index", as: "current_purchase_orders"
 
   get "/dashboard/purchase_history", to: "dashboards#purchase_history_index", as: "purchase_history"
-  put "/dashboard/purchase_history/:id", to: "dashboards#purchase_user_feedback_update"
-  patch "/dashboard/purchase_history/:id", to: "dashboards#purchase_user_feedback_update", as: "feedback_update"
+  put "/dashboard/purchase_history/:id", to: "dashboards#user_feedback_update"
+  patch "/dashboard/purchase_history/:id", to: "dashboards#user_feedback_update", as: "feedback_update"
 end

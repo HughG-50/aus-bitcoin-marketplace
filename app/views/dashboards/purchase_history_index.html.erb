@@ -26,13 +26,13 @@
     </ul>
 
     
-    <% if purchase.feedback_for_seller == nil %>
-        <%= form_with url: feedback_update_path(purchase.id), local: true, method: :patch do |form| %>
+    <% if purchase.listing.feedback_for_seller == nil %>
+        <%= form_with url: feedback_update_path(purchase.listing.id), local: true, method: :patch do |form| %>
             <%= form.hidden_field :feedback_for_seller, value: "positive" %>
             <%= form.submit "Positive"%>
         <% end %>
 
-        <%= form_with url: feedback_update_path(purchase.id), local: true, method: :patch do |form| %>
+        <%= form_with url: feedback_update_path(purchase.listing.id), local: true, method: :patch do |form| %>
             <%= form.hidden_field :feedback_for_seller, value: "negative" %>
             <%= form.submit "Negative"%>
         <% end %>
