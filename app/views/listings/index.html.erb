@@ -5,7 +5,11 @@
     <ul>
         <li>Title: <%= listing.title %></li>
         <li>User: <%= listing.user.username %> </li>
-        <li>Reputation score: <%= listing.user.num_btc_purchases %>; <%= number_to_percentage(listing.user.feedback_score*100, precision: 1) %> </li>
+        <% if listing.user.feedback_score != nil%>
+            <li>Reputation score: <%= listing.user.num_completed_listings %> listing(s) sold; <%= number_to_percentage(listing.user.feedback_score*100, precision: 1) %> </li>
+        <% else %>
+            <li>Reputation score: <%= listing.user.num_completed_listings %> listing(s) sold; No feedback acquired;
+        <% end %>
         <li>Description: <%= listing.description %></li>
         <li>Payment Method: <%= listing.payment_method %></li>
         <li>Price (BTC/AUD): <%= number_to_currency(listing.price_BTC_AUD) %></li>
