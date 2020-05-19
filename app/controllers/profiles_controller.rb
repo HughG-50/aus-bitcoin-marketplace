@@ -35,7 +35,7 @@ class ProfilesController < ApplicationController
     private 
 
     def user_params
-        params.require(:user).permit(:username, :bio, :btc_address, :feedback_score, :num_btc_purchases, :num_completed_listings, :country, :city)
+        params.require(:user).permit(:username, :bio, :btc_address, :feedback_score, :num_btc_purchases, :num_completed_listings, :country, :city, :picture)
     end
     
 end

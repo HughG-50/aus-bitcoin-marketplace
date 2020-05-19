@@ -1,9 +1,9 @@
 <h1> <%= @user.username %> </h1>
 
-<% if !@user.picture.attached? %>
-    <%= image_tag  "https://i.stack.imgur.com/34AD2.jpg"%>
-<% else %>
+<% if @user.picture.attached? %>
     <%= image_tag @user.picture %>
+<% else %>
+    <%= image_tag  "https://i.stack.imgur.com/34AD2.jpg"%>
 <% end %>
 
 <%= link_to  "Login Details", edit_user_registration_path(@user.id)%>

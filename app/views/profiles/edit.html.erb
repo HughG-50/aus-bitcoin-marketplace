@@ -9,10 +9,10 @@
     <%= form_with model: @user, local: true, method: :post do |form| %>
         <% # Profile Picture Upload Form  - Displays default picture if no picture is uploaded already%>
         <%= form.label :profile_picture %>
-            <% if !@user.picture.attached? %>
-                <%= image_tag  "https://i.stack.imgur.com/34AD2.jpg"%>
-            <% else %>
+            <% if @user.picture.attached? %>
                 <%= image_tag @user.picture %>
+            <% else %>
+                <%= image_tag  "https://i.stack.imgur.com/34AD2.jpg"%>
             <% end %>
         <%= form.file_field :picture, accept: 'image/png,image/gif,image/jpeg,image/jpg' %>
 
