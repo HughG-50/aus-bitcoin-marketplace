@@ -19,10 +19,10 @@
         <li>Price (BTC/AUD): <%= number_to_currency(listing.price_BTC_AUD) %></li>
         <li>Amount (AUD): <%= number_to_currency(listing.amount) %></li>
         <%# Create simple logic here to display tick or cross, or thumbs up or thumbs down depending on whether feedback positive or negative %>
-        <% if listing.purchase.feedback_for_seller == nil %>
+        <% if listing.feedback_for_seller == nil %>
             <li>Feedback from buyer: Waiting for buyer feedback.. </li>
         <% else %>
-            <li>Feedback from buyer: <%= listing.purchase.feedback_for_seller %> </li>
+            <li>Feedback from buyer: <%= listing.feedback_for_seller %> </li>
         <% end %>
     </ul>
 <% end %>

@@ -47,12 +47,10 @@ class DashboardsController < ApplicationController
     def purchase_history_index
         @purchases = Purchase.where(nil)
         @purchases = @user.purchases.filter_by_btc_sent("sent")
-        # Should be able to delete
-        # @feedback_for_sellers = Purchase.feedback_for_sellers.keys
     end
 
-    # Update purchase to give feedback for purchase and update listing owner feedback score
-    def purchase_user_feedback_update
+    # Once purchase is made, update feedback for listing and the owners feedback_score
+    def user_feedback_update
 
         # Should give count of all of a users listings that are completed
         # sold_user_listings = @purchase.listing.user.listings.where(status: "completed_listing").count
@@ -69,6 +67,24 @@ class DashboardsController < ApplicationController
         # # TO DO // NEED TO UPDATE feedback_score WITH A CORRECTLY CALCULATED 
         # updated_feedback_score = 50
         # @purchase.listing.user.update(feedback_score: updated_feedback_score)
+
+        # @listings = Listing.where(nil)
+        # @listings = @user.listings.filter_by_feedback_for_seller("completed_listing")
+
+        @purchase = @user.purchases.find(params[:id])
+        @listing = @purchase.listing
+        @listing.update(feedback_for_seller: params[:feedback_for_seller])
+
+        @listings = Listing.where(nil)
+        @listings = @purchase.listing.user.listings.filter_by_status("completed_listing")
+        num_of_seller_completed_listings = @listings.count
+        
+        @listings = Listing.where(nil)
+        @listings = @purchase.listing.user.listings.filter_by_feedback_for_seller("positive")
+        num_of_seller_positive_feedback_listings = @listings.count
+
+        updated_user_feedback_score = (num_of_seller_positive_feedback_listings/num_of_seller_completed_listings.to_f)
+        @purchase.listing.user.update(feedback_score: updated_user_feedback_score)
       
         redirect_to purchase_history_path
     end

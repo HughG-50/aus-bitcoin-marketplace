@@ -9,7 +9,7 @@ when "development"
     user.username = "admin"
     user.bio = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
     user.btc_address = "1FfmbHfnpaZjKFvyi1okTjJJusN455paPH"
-    user.feedback_score = 98
+    user.feedback_score = nil
     user.num_btc_purchases = 0
     user.num_completed_listings = 0
     user.country = "Australia"
@@ -22,7 +22,7 @@ when "development"
     user.username = "Alice"
     user.bio = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
     user.btc_address = "1LWPSnSdN8yYzVnfkYA6wpqZwQyVu4UDNY"
-    user.feedback_score = 95
+    user.feedback_score = nil
     user.num_btc_purchases = 0
     user.num_completed_listings = 0
     user.country = "Australia"
@@ -35,7 +35,7 @@ when "development"
     user.username = "Bob"
     user.bio = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
     user.btc_address = "19yQtcX8JPkSTNyvA7sB2AQYAhmgt5t42c"
-    user.feedback_score = 99
+    user.feedback_score = nil
     user.num_btc_purchases = 0
     user.num_completed_listings = 0
     user.country = "Australia"
@@ -48,7 +48,7 @@ when "development"
     user.username = "Hugh"
     user.bio = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
     user.btc_address = "1mn9kFzaspNCpnwKHQVeRkQK3ZsuWi8Jm"
-    user.feedback_score = 90
+    user.feedback_score = nil
     user.num_btc_purchases = 0
     user.num_completed_listings = 0
     user.country = "Australia"
@@ -61,7 +61,7 @@ when "development"
     user.username = "Morgan"
     user.bio = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
     user.btc_address = "1EtdZKknyXUtzRqLa4ZLJn5LPkRphqhZDe"
-    user.feedback_score = 80
+    user.feedback_score = nil
     user.num_btc_purchases = 0
     user.num_completed_listings = 0
     user.country = "Australia"
@@ -74,7 +74,7 @@ when "development"
     user.username = "Ross"
     user.bio = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
     user.btc_address = "12hw4mhjEVBEjkfruJJC1Tr42whn1eZZ8D"
-    user.feedback_score = 100
+    user.feedback_score = nil
     user.num_btc_purchases = 0
     user.num_completed_listings = 0
     user.country = "Australia"
@@ -117,74 +117,85 @@ end
 case Rails.env
 when "development"
     # Morgan purchase listing 1 but has not given feedback or had the BTC sent (user controlling listing updates btc_sent)
-    Purchase.create(user_id: 5, listing_id: 1, feedback_for_seller: nil, btc_sent: :not_sent)
+    Purchase.create(user_id: 5, listing_id: 1, btc_sent: :not_sent)
     listing = Listing.find(1)
-    listing.status = :pending_completion
+    listing.status = :pending_completion 
+    # listing.feedback_for_seller = nil
     listing.save!
 
     purchase = Purchase.find(1)
     number_of_purchases = purchase.user.num_btc_purchases + 1
-    purchase.user.update(num_btc_purchases: number_of_purchases)
+    User.find(5).update(num_btc_purchases: number_of_purchases)
 
     # Morgan purchased listing 2 and received Bitcoin, gave negative feedback
-    Purchase.create(user_id: 5, listing_id: 2, feedback_for_seller: nil, btc_sent: :not_sent)
+    Purchase.create(user_id: 5, listing_id: 2, btc_sent: :not_sent)
     listing = Listing.find(2)
     listing.status = :pending_completion
+    # listing.feedback_for_seller = nil
     listing.save!
 
     purchase = Purchase.find(2)
     number_of_purchases = purchase.user.num_btc_purchases + 1
-    purchase.user.update(num_btc_purchases: number_of_purchases)
+    User.find(5).update(num_btc_purchases: number_of_purchases)
 
     # Morgan purchased listing 3 and received Bitcoin, gave postive feedback
-    Purchase.create(user_id: 5, listing_id: 3, feedback_for_seller: :negative, btc_sent: :sent)
+    Purchase.create(user_id: 5, listing_id: 3, btc_sent: :sent)
     listing = Listing.find(3)
     listing.status = :completed_listing
+    listing.feedback_for_seller = "negative"
+
     number_of_completed_listings = listing.user.num_completed_listings + 1
-    listing.user.update(num_completed_listings: number_of_completed_listings)
+    User.find(1).update(num_completed_listings: number_of_completed_listings)
+
+    # feedback_score = (0/number_of_completed_listings).to_f
+    # User.find(1).update(feedback_score: feedback_score)
     listing.save!
 
     purchase = Purchase.find(3)
     number_of_purchases = purchase.user.num_btc_purchases + 1
-    purchase.user.update(num_btc_purchases: number_of_purchases)
+    User.find(5).update(num_btc_purchases: number_of_purchases)
 
     # Morgan purchased listing 3 and received Bitcoin, gave postive feedback
-    Purchase.create(user_id: 5, listing_id: 4, feedback_for_seller: :positive, btc_sent: :sent)
+    Purchase.create(user_id: 5, listing_id: 4, btc_sent: :sent)
     listing = Listing.find(4)
     listing.status = :completed_listing
+    listing.feedback_for_seller = "positive"
+
     number_of_completed_listings = listing.user.num_completed_listings + 1
-    listing.user.update(num_completed_listings: number_of_completed_listings)
+
+    feedback_score = (1/number_of_completed_listings.to_f)
+    User.find(1).update(num_completed_listings: number_of_completed_listings, feedback_score: feedback_score)
+
+    # feedback_score = (1/number_of_completed_listings).to_f
+    # User.find(1).update(feedback_score: feedback_score)
     listing.save!
 
     purchase = Purchase.find(4)
     number_of_purchases = purchase.user.num_btc_purchases + 1
-    purchase.user.update(num_btc_purchases: number_of_purchases)
+    User.find(5).update(num_btc_purchases: number_of_purchases)
 
     # Ross purchased listing 7 but has not given feedback or had the BTC sent
-    Purchase.create(user_id: 6, listing_id: 7, feedback_for_seller: nil, btc_sent: :not_sent)
+    Purchase.create(user_id: 6, listing_id: 7, btc_sent: :not_sent)
     listing = Listing.find(7)
     listing.status = :pending_completion
+    # listing.feedback_for_seller = nil
     listing.save!
 
     purchase = Purchase.find(5)
     number_of_purchases = purchase.user.num_btc_purchases + 1
-    purchase.user.update(num_btc_purchases: number_of_purchases)
+    User.find(6).update(num_btc_purchases: number_of_purchases)
 
     # Ross purchased listing 11, received Bitcoin but has not given feedback
-    Purchase.create(user_id: 6, listing_id: 11, feedback_for_seller: nil, btc_sent: :sent)
+    Purchase.create(user_id: 6, listing_id: 11, btc_sent: :sent)
     listing = Listing.find(11)
     listing.status = :completed_listing
+    # listing.feedback_for_seller = nil
+
     number_of_completed_listings = listing.user.num_completed_listings + 1
-    listing.user.update(num_completed_listings: number_of_completed_listings)
+    User.find(2).update(num_completed_listings: number_of_completed_listings)
     listing.save!
 
     purchase = Purchase.find(6)
     number_of_purchases = purchase.user.num_btc_purchases + 1
-    purchase.user.update(num_btc_purchases: number_of_purchases)
+    User.find(6).update(num_btc_purchases: number_of_purchases)
 end
-
-# Example: Checking if a Listing is purchased:
-# Purchase.where(listing_id: 1).empty?
-
-# Example: Updating a User Listing that BTC has been sent to the Purchase (owned by another User)
-# User.first.listings.first.purchase.update(btc_sent: true)

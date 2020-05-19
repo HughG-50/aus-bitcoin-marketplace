@@ -14,7 +14,7 @@
 <h3> Information on <%= @user.username %> </h3>
 
 <ul>
-    <li>Feedback Score: <%= @user.feedback_score %> </li>
+    <li>Feedback Score: <%= number_to_percentage(@user.feedback_score*100, precision: 1) %> </li>
     <li>Number of BTC purchases: <%= @user.num_btc_purchases %> </li>
     <li>Number of BTC listings sold: <%= @user.num_completed_listings %> </li>
     <li>Account Created: <%= @user.created_at.strftime("%B %d, %Y") %> </li>
