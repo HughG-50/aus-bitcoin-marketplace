@@ -16,15 +16,12 @@
     <li> Description: <%= @listing.description %> </li>
 </ul>
 
-<% if current_user == @listing.user %>
+<% if current_user == @listing.user && @listing.status == "available_listing"%>
     <%= link_to "edit", edit_listing_path(@listing.id) %>
-
-    <%# Should this error check be in the controller?%>
-    <% if @listing.status == "available_listing" %>
-        <%= form_with model: @listing, local: true, method: "delete" do |form| %>
-            <%= submit_tag "delete" %>
-        <% end %>
+    <%= form_with model: @listing, local: true, method: "delete" do |form| %>
+        <%= submit_tag "delete" %>
     <% end %>
+<% elsif current_user == @listing.user%>
 <% else %>
     Make Payment (Stripe FORMS TO BE ADDED/Pay now button) 
 <% end %>
