@@ -51,26 +51,6 @@ class DashboardsController < ApplicationController
 
     # Once purchase is made, update feedback for listing and the owners feedback_score
     def user_feedback_update
-
-        # Should give count of all of a users listings that are completed
-        # sold_user_listings = @purchase.listing.user.listings.where(status: "completed_listing").count
-        # for listing in sold_user_listings
-        #     purchase = Purchase.where(listing_id: listing.id)
-        #     purchase.feedback_for_seller
-        #     # add those up, for total positive feedback
-        # end
-        # compare to count
-
-        # @purchase = @user.purchases.find(params[:id])
-        # @purchase.update(feedback_for_seller: params[:feedback_for_seller])
-
-        # # TO DO // NEED TO UPDATE feedback_score WITH A CORRECTLY CALCULATED 
-        # updated_feedback_score = 50
-        # @purchase.listing.user.update(feedback_score: updated_feedback_score)
-
-        # @listings = Listing.where(nil)
-        # @listings = @user.listings.filter_by_feedback_for_seller("completed_listing")
-
         @purchase = @user.purchases.find(params[:id])
         @listing = @purchase.listing
         @listing.update(feedback_for_seller: params[:feedback_for_seller])
@@ -96,19 +76,5 @@ class DashboardsController < ApplicationController
         # only logged in user accesses Dashboard pages
         @user = current_user
     end
-
-    def listing_params
-        params.require(:listing).permit(:title, :description, :payment_method, :price_BTC_AUD, :amount, :user_id, :status)
-    end
-
-
-    # NOTES:
-    # @listings = current_user.listings
-    # boolean check
-    # Purchase.where(listing_id: 1).empty?
-    # Or
-    # Purchase.exists?(:purchase_id)
-    # Does purchase exist where BTC is sent?
-    # Purchase.exists?(:conditions => "BTC_sent = true")
 
 end
