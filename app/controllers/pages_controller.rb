@@ -1,5 +1,5 @@
 class PagesController < ApplicationController 
     def home 
-        @listings = Listing.all.order(created_at: :desc)
+        @listings = Listing.filter_by_status("available_listing")
     end
 end
