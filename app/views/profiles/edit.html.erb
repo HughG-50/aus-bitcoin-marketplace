@@ -7,27 +7,43 @@
 <div>
     <% # What does local: true do? %>
     <%= form_with model: @user, local: true, method: :post do |form| %>
-        <% # Profile Picture Upload Form  - Displays default picture if no picture is uploaded already%>
-        <%= form.label :profile_picture %>
-            <% if @user.picture.attached? %>
-                <%= image_tag @user.picture %>
-            <% else %>
-                <%= image_tag  "https://i.stack.imgur.com/34AD2.jpg"%>
-            <% end %>
-        <%= form.file_field :picture, accept: 'image/png,image/gif,image/jpeg,image/jpg' %>
+        <div>
+            <% # Profile Picture Upload Form  - Displays default picture if no picture is uploaded already%>
+            <%= form.label :profile_picture %>
+                <% if @user.picture.attached? %>
+                    <%= image_tag @user.picture %>
+                <% else %>
+                    <%= image_tag  "https://i.stack.imgur.com/34AD2.jpg"%>
+                <% end %>
+            <%= form.file_field :picture, accept: 'image/png,image/gif,image/jpeg,image/jpg' %>
+        </div>
 
-        <% # Bio Text Input Form %>
-        <%= form.label :bio %>
-        <%= form.text_area :bio, value: @user.bio, rows: "6" %>
+        <div>
+            <% # Username Text Input Form %>
+            <%= form.label :username %>
+            <%= form.text_field :username, value: @user.username %>
+        </div>
+        
+        <div>
+            <% # Bio Text Input Form %>
+            <%= form.label :bio %>
+            <%= form.text_area :bio, value: @user.bio, rows: "6" %>
+        </div>
 
-        <% # Forms for updating location %>
-        <%= form.label :country %>
-        <%= form.text_field :country %>
+        <div>
+            <% # Forms for updating location %>
+            <%= form.label :country %>
+            <%= form.text_field :country %>
+        </div>
 
-        <%= form.label :city %>
-        <%= form.text_field :city %>
+        <div>
+            <%= form.label :city %>
+            <%= form.text_field :city %>
+        </div>
 
-        <% # Submit form%>
-        <%= form.submit "Update"%>
+        <div>
+            <% # Submit form%>
+            <%= form.submit "Update"%>
+        </div>
     <% end %>
 </div>
