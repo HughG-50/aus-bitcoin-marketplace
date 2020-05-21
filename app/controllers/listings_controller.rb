@@ -42,13 +42,13 @@ class ListingsController < ApplicationController
     if @listing.errors.any?
         render "edit"
     else 
-        # redirect_to listings_path
-        # redirect_to show_basic_path(@listing.id)
         redirect_to listing_path(@listing.id)
     end
   end
 
   # Create a purchase object for a listing
+  # Whether a purchase object exists or not determines the status of a listing to update to pending completion
+  # (Once a listing has been changed to a pending completion, it can no longer be edited or removed by the user)
   def create_purchase 
     listing_id = params[:id]
     @listing = Listing.find(listing_id)
@@ -61,8 +61,6 @@ class ListingsController < ApplicationController
     redirect_to current_purchase_orders_path
   end
 
-
-  # TO DO // Consider changing redirect to dashboard once its been implemented
   def destroy
     Listing.find(params[:id]).destroy
     
@@ -88,9 +86,5 @@ class ListingsController < ApplicationController
       redirect_to listings_path
     end
   end
-
-  # def purchase_params
-  #   params.require(:purchase).permit(:user_id, :listing_id, :btc_sent)
-  # end
 
 end
