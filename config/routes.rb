@@ -1,5 +1,11 @@
 Rails.application.routes.draw do
   devise_for :users
+  # Example for custom devise controllers/routes (rails g devise:controllers users)
+  # Ensure you have overridden routes for generated controllers in your routes.rb.
+  # For example:
+  # devise_for :users, controllers: { 
+  #   registrations: "registrations" 
+  # }
 
   # Listings routes
   resources :listings
