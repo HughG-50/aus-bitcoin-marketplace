@@ -4,52 +4,57 @@
     <% end %>
 <% end %>
 
-<div>
-    <% # What does local: true do? %>
-    <%= form_with model: @user, local: true, method: :post do |form| %>
-        <div>
-            <% # Profile Picture Upload Form  - Displays default picture if no picture is uploaded already%>
-            <%= form.label :profile_picture %>
-                <% if @user.picture.attached? %>
-                    <%= image_tag @user.picture %>
-                <% else %>
-                    <%= image_tag  "https://i.stack.imgur.com/34AD2.jpg"%>
-                <% end %>
-            <%= form.file_field :picture, accept: 'image/png,image/gif,image/jpeg,image/jpg' %>
-        </div>
+<div class="text-left">
+    <div class="form-container">
+        <h1>Edit Profile</h1>
 
-        <div>
-            <% # Username Text Input Form %>
-            <%= form.label :username %>
-            <%= form.text_field :username, value: @user.username %>
-        </div>
-        
-        <div>
-            <% # Bio Text Input Form %>
-            <%= form.label :bio %>
-            <%= form.text_area :bio, value: @user.bio, rows: "6" %>
-        </div>
+        <%= form_with model: @user, local: true, method: :post do |form| %>
+            <div class="form-group text-left">
+                <% # Profile Picture Upload Form  - Displays default picture if no picture is uploaded already%>
+                <%= form.label :profile_picture %>
+                    <div class="profile-picture">
+                        <% if @user.picture.attached? %>
+                            <%= image_tag @user.picture %>
+                        <% else %>
+                            <%= image_tag  "https://i.stack.imgur.com/34AD2.jpg"%>
+                        <% end %>
+                    </div>
+                <%= form.file_field :picture, accept: 'image/png,image/gif,image/jpeg,image/jpg' %>
+            </div>
 
-        <div>
-            <% # BTC Address Text Input Form %>
-            <%= form.label :btc_address %>
-            <%= form.text_field :btc_address, value: @user.btc_address %>
-        </div>
+            <div class="form-item">
+                <% # Username Text Input Form %>
+                <%= form.label :username %>
+                <%= form.text_field :username, value: @user.username, class:"form-control" %>
+            </div>
+            
+            <div class="form-item">
+                <% # Bio Text Input Form %>
+                <%= form.label :bio %>
+                <%= form.text_area :bio, value: @user.bio, class:"form-control", rows: "6" %>
+            </div>
 
-        <div>
-            <% # Forms for updating location %>
-            <%= form.label :country %>
-            <%= form.text_field :country %>
-        </div>
+            <div class="form-item">
+                <% # BTC Address Text Input Form %>
+                <%= form.label :btc_address %>
+                <%= form.text_field :btc_address, value: @user.btc_address, class:"form-control"%>
+            </div>
 
-        <div>
-            <%= form.label :city %>
-            <%= form.text_field :city %>
-        </div>
+            <div class="form-item">
+                <% # Forms for updating location %>
+                <%= form.label :country %>
+                <%= form.text_field :country, class:"form-control"%>
+            </div>
 
-        <div>
-            <% # Submit form%>
-            <%= form.submit "Update"%>
-        </div>
-    <% end %>
+            <div class="form-item">
+                <%= form.label :city %>
+                <%= form.text_field :city, class:"form-control"%>
+            </div>
+
+            <div class="form-submit">
+                <% # Submit form%>
+                <%= form.submit "Update", class: "btn btn-lg btn-primary btn-block" %>
+            </div>
+        <% end %>
+    </div>
 </div>
