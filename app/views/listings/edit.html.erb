@@ -1,35 +1,45 @@
-<h1>Edit Listing</h1>
+
 
 <% if @listing.errors.any? %>
-    <% @listing.errors.full_messages.each do |message| %>
-        <li style="color: red"><%= message %></li>
-    <% end %>
-<% end %>
-
-<%= form_with(model: @listing, local: true) do |form| %>
-    <div>
-        <%= form.label :title %>
-        <%= form.text_field :title %>
-    </div>
-
-    <div>
-        <%= form.label :description %>
-        <%= form.text_area :description %>
-    </div>
-
-    <div>
-        <%= form.label :price_BTC_AUD %>
-        <%= form.number_field :price_BTC_AUD %>
-    </div>
-
-    <div>
-        <%= form.label :amount %>
-        <%= form.number_field :amount %>
-    </div>
-
-    <%= form.hidden_field :payment_method, value: "Credit Card" %>
-
-    <div>
-        <%= form.submit %>
+    <div class="errors">
+        <% @listing.errors.full_messages.each do |message| %>
+            <li style="color: red"><%= message %></li>
+        <% end %>
     </div>
 <% end %>
+
+<div class="text-left">
+    <div class="form-container">
+        <h1>Edit Listing</h1>
+
+        <div class="form-group">
+            <%= form_with(model: @listing, local: true) do |form| %>
+                <div class="form-item">
+                    <%= form.label :title %>
+                    <%= form.text_field :title, class:"form-control" %>
+                </div>
+
+                <div class="form-item">
+                    <%= form.label :description %>
+                    <%= form.text_area :description, class:"form-control", rows: "6"%>
+                </div>
+
+                <div class="form-item">
+                    <%= form.label :price_BTC_AUD, "Price (BTC/AUD)" %>
+                    <%= form.number_field :price_BTC_AUD, class:"form-control" %>
+                </div>
+
+                <div class="form-item">
+                    <%= form.label :amount %>
+                    <%= form.number_field :amount, class:"form-control" %>
+                </div>
+
+                <%= form.hidden_field :payment_method, value: "Credit Card" %>
+
+                <div class="form-submit">
+                    <%= form.submit "Update", class: "btn btn-lg btn-primary btn-block"%>
+                </div>
+            <% end %>
+        </div>
+    </div>
+</div>

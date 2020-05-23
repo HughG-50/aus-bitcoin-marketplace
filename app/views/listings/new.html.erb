@@ -1,4 +1,4 @@
-<h1>New Listing</h1>
+
 
 <% if @listing.errors.any? %>
     <% @listing.errors.full_messages.each do |message| %>
@@ -6,31 +6,39 @@
     <% end %>
 <% end %>
 
-<%= form_with(model: @listing, local: true) do |form| %>
-    <div>
-        <%= form.label :title %>
-        <%= form.text_field :title %>
-    </div>
+<div class="text-left">
+    <div class="form-container">
+        <h1>New Listing</h1>
 
-    <div>
-        <%= form.label :description %>
-        <%= form.text_area :description %>
-    </div>
+        <div class="form-group">
+            <%= form_with(model: @listing, local: true) do |form| %>
+                <div class="form-item">
+                    <%= form.label :title %>
+                    <%= form.text_field :title, class:"form-control" %>
+                </div>
 
-    <div>
-        <%= form.label :price_BTC_AUD %>
-        <%= form.number_field :price_BTC_AUD %>
-    </div>
+                <div class="form-item">
+                    <%= form.label :description %>
+                    <%= form.text_area :description, class:"form-control", rows: "6" %>
+                </div>
 
-    <div>
-        <%= form.label :amount %>
-        <%= form.number_field :amount %>
-    </div>
+                <div class="form-item">
+                    <%= form.label :price_BTC_AUD, "Price (BTC/AUD)"%>
+                    <%= form.number_field :price_BTC_AUD, class:"form-control" %>
+                </div>
 
-    <%= form.hidden_field :payment_method, value: "Credit Card" %>
-    <%= form.hidden_field :status, value: :available_listing %>
+                <div class="form-item">
+                    <%= form.label :amount %>
+                    <%= form.number_field :amount, class:"form-control" %>
+                </div>
 
-    <div>
-        <%= form.submit %>
+                <%= form.hidden_field :payment_method, value: "Credit Card" %>
+                <%= form.hidden_field :status, value: :available_listing %>
+
+                <div class="form-submit">
+                    <%= form.submit "Create Listing", class: "btn btn-lg btn-primary btn-block" %>
+                </div>
+            <% end %>
+        </div>
     </div>
-<% end %>
+</div>

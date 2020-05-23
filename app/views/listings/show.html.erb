@@ -25,7 +25,7 @@
 <% else %>
     (Stripe FORMS TO BE ADDED) 
     <%= form_with url: create_purchase_path(@listing.id), local: true, method: :post do |form|%>
-        <%= form.submit "Buy"%>
+        <%= form.submit "Buy", class: "btn btn-lg btn-primary btn-block" %>
     <% end %>
 <% end %>
 
