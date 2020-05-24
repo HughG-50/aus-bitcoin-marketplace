@@ -15,8 +15,8 @@
     <table class="table">
         <thead>
             <tr>
-                <th scope="col">P. ID #</th>
-                <th scope="col">ID #</th>
+                <th scope="col">P.ID#</th>
+                <th scope="col">ID#</th>
                 <th scope="col">Buyer</th>
                 <th scope="col">Title</th>
                 <th scope="col">Listing Date</th>
@@ -31,30 +31,29 @@
         <tbody>
             <% for purchase in @purchases %>
                 <tr>
-                    <td>Purchase ID: <% purchase.id%></li>
-                    <li>Listing ID: <%= purchase.listing.id%></li>
-                    <li>Bought From: <%= purchase.listing.user.username%></li>
-                    <li>Listing Title: <%= purchase.listing.title%></li>
-                    <li>Listing Created At: <%= purchase.listing.created_at.strftime("%B %d, %Y")%></li>
-                    <li>Purchase Made At: <%= purchase.created_at.strftime("%d/%m/%y") %> </li>
-                    <li>Payment Method: <%= purchase.listing.payment_method %> </li>
-                    <li>Price (BTC/AUD): <%= number_to_currency(purchase.listing.price_BTC_AUD) %></li>
-                    <li>Amount paid (AUD): <%= number_to_currency(purchase.listing.amount) %></li>
-                    <li>BTC Received: <%= (((purchase.listing.amount).to_f)/((purchase.listing.price_BTC_AUD).to_f)).round(9) %> </li>
-                </tr>
-
+                    <td><%=purchase.id%></li>
+                    <td><%=purchase.listing.id%></td>
+                    <td><%=purchase.listing.user.username%></td>
+                    <td><%=purchase.listing.title%></td>
+                    <td><%=purchase.listing.created_at.strftime("%d/%m/%y")%></td>
+                    <td><%=purchase.created_at.strftime("%d/%m/%y")%></td>
+                    <td><%=purchase.listing.payment_method%></td>
+                    <td><%=number_to_currency(purchase.listing.price_BTC_AUD)%></td>
+                    <td><%=number_to_currency(purchase.listing.amount)%></td>
+                    <td><%=(((purchase.listing.amount).to_f)/((purchase.listing.price_BTC_AUD).to_f)).round(9)%></td>
                 
                 <% if purchase.listing.feedback_for_seller == nil %>
                     <%= form_with url: feedback_update_path(purchase.listing.id), local: true, method: :patch do |form| %>
                         <%= form.hidden_field :feedback_for_seller, value: "positive" %>
-                        <%= form.submit "Positive"%>
+                        <td><%= form.submit "Positive", class:"btn btn-primary btn-sm"%></td>
                     <% end %>
 
                     <%= form_with url: feedback_update_path(purchase.listing.id), local: true, method: :patch do |form| %>
-                        <%= form.hidden_field :feedback_for_seller, value: "negative" %>
-                        <%= form.submit "Negative"%>
+                        <%= form.hidden_field :feedback_for_seller, value: "negative"%>
+                        <td><%= form.submit "Negative", class:"btn btn-primary btn-sm"%></td>
                     <% end %>
                 <% end %>
+                </tr>
             <% end %>
         </tbody>
     </table>
