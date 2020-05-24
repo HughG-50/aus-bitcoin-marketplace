@@ -1,23 +1,39 @@
-<h1>Listings</h1>
-<h2>Buy Bitcoins online with Australian Dollars (AUD)</h2>
+<div class="container-fluid">
+    <h1>Listings</h1>
+    <h4>Buy Bitcoins online with Australian Dollars (AUD)</h4>
 
-<% for listing in @listings %>
-    <ul>
-        <li>Title: <%= listing.title %></li>
-        <li>User: <%= listing.user.username %> </li>
-        <% if listing.user.feedback_score != nil%>
-            <li>Reputation score: <%= listing.user.num_completed_listings %> listing(s) sold; <%= number_to_percentage(listing.user.feedback_score*100, precision: 1) %> </li>
-        <% else %>
-            <li>Reputation score: <%= listing.user.num_completed_listings %> listing(s) sold; No feedback acquired;
-        <% end %>
-        <li>Description: <%= listing.description %></li>
-        <li>Payment Method: <%= listing.payment_method %></li>
-        <li>Price (BTC/AUD): <%= number_to_currency(listing.price_BTC_AUD) %></li>
-        <li>Amount available (AUD): <%= number_to_currency(listing.amount) %></li>
-        <% if user_signed_in? %>
-            <li> <%= link_to  "View Listing", listing_path(listing.id)%> </li>
-        <% else %>
-            <li> <%= link_to  "View Listing", show_basic_path(listing.id)%> </li>
-        <% end %>
-    </ul>
-<% end %>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Seller</th>
+                <th scope="col">Title</th>
+                <th scope="col">Reputation Score</th>
+                <th scope="col">Payment Method</th>
+                <th scope="col">Price (BTC/AUD)</th>
+                <th scope="col">Amount (AUD)</th>
+                <th scope="col">Listing</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% for listing in @listings %>
+                <tr>
+                <td><%= link_to "#{listing.user.username}", user_path(listing.user.id) %></td>
+                <td><%= listing.title %> </td>
+                <% if listing.user.feedback_score != nil%>
+                    <td><%= listing.user.num_completed_listings %> listing(s) sold; <%= number_to_percentage(listing.user.feedback_score*100, precision: 1) %> </td>
+                <% else %>
+                    <td><%= listing.user.num_completed_listings %> listing(s) sold; No feedback acquired;
+                <% end %>
+                <td><%= listing.payment_method %></td>
+                <td><%= number_to_currency(listing.price_BTC_AUD) %></td>
+                <td><%= number_to_currency(listing.amount) %></td>
+                <% if user_signed_in? %>
+                    <td> <%= link_to "View", listing_path(listing.id), class: "btn btn-primary btn-sm" %> </td>
+                <% else %>
+                    <td> <%= link_to "Buy", show_basic_path(listing.id), class: "btn btn-primary btn-sm" %> </td>
+                <% end %>
+                </tr>
+            <% end %>
+        </tbody>
+    </table>
+</div>
