@@ -1,40 +1,61 @@
-<h1>Dashboard</h1>
+<div class="container-fluid">
+    <h1>Dashboard</h1>
 
-<h3>Purchase History</h3>
+    <h3>Purchase History</h3>
 
-<h6>Sellers</h6>
-<%= link_to "Pending Listing Completions", pending_listings_path %> |
-<%= link_to "Available Listings", available_listings_path %> | 
-<%= link_to "Completed Listings", completed_listings_path %>
+    <h6>Sellers</h6>
+    <%= link_to "Pending Listing Completions", pending_listings_path %> |
+    <%= link_to "Available Listings", available_listings_path %> | 
+    <%= link_to "Completed Listings", completed_listings_path %>
 
-<h6>Buyers</h6>
-<%= link_to "Current Purchase Orders", current_purchase_orders_path %> | 
-<%= link_to "Purchase History", purchase_history_path %>
+    <h6>Buyers</h6>
+    <%= link_to "Current Purchase Orders", current_purchase_orders_path %> | 
+    <%= link_to "Purchase History", purchase_history_path %>
 
-<% for purchase in @purchases %>
-    <ul>
-        <li>Purchase ID: <% purchase.id%> </li>
-        <li>Listing ID: <%= purchase.listing.id %> </li>
-        <li>Bought From: <%= purchase.listing.user.username %> </li>
-        <li>Listing Title: <%= purchase.listing.title %> </li>
-        <li>Listing Created At: <%= purchase.listing.created_at.strftime("%B %d, %Y") %> </li>
-        <li>Purchase Made At: <%= purchase.created_at.strftime("%B %d, %Y") %> </li>
-        <li>Payment Method: <%= purchase.listing.payment_method %> </li>
-        <li>Price (BTC/AUD): <%= number_to_currency(purchase.listing.price_BTC_AUD) %></li>
-        <li>Amount paid (AUD): <%= number_to_currency(purchase.listing.amount) %></li>
-        <li>BTC Received: <%= (((purchase.listing.amount).to_f)/((purchase.listing.price_BTC_AUD).to_f)).round(9) %> </li>
-    </ul>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">P. ID #</th>
+                <th scope="col">ID #</th>
+                <th scope="col">Buyer</th>
+                <th scope="col">Title</th>
+                <th scope="col">Listing Date</th>
+                <th scope="col">Purchase Date</th>
+                <th scope="col">Payment Method</th>
+                <th scope="col">Price (BTC/AUD)</th>
+                <th scope="col">Amount (AUD)</th>
+                <th scope="col">BTC Received</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <% for purchase in @purchases %>
+                <tr>
+                    <td>Purchase ID: <% purchase.id%></li>
+                    <li>Listing ID: <%= purchase.listing.id%></li>
+                    <li>Bought From: <%= purchase.listing.user.username%></li>
+                    <li>Listing Title: <%= purchase.listing.title%></li>
+                    <li>Listing Created At: <%= purchase.listing.created_at.strftime("%B %d, %Y")%></li>
+                    <li>Purchase Made At: <%= purchase.created_at.strftime("%d/%m/%y") %> </li>
+                    <li>Payment Method: <%= purchase.listing.payment_method %> </li>
+                    <li>Price (BTC/AUD): <%= number_to_currency(purchase.listing.price_BTC_AUD) %></li>
+                    <li>Amount paid (AUD): <%= number_to_currency(purchase.listing.amount) %></li>
+                    <li>BTC Received: <%= (((purchase.listing.amount).to_f)/((purchase.listing.price_BTC_AUD).to_f)).round(9) %> </li>
+                </tr>
 
-    
-    <% if purchase.listing.feedback_for_seller == nil %>
-        <%= form_with url: feedback_update_path(purchase.listing.id), local: true, method: :patch do |form| %>
-            <%= form.hidden_field :feedback_for_seller, value: "positive" %>
-            <%= form.submit "Positive"%>
-        <% end %>
+                
+                <% if purchase.listing.feedback_for_seller == nil %>
+                    <%= form_with url: feedback_update_path(purchase.listing.id), local: true, method: :patch do |form| %>
+                        <%= form.hidden_field :feedback_for_seller, value: "positive" %>
+                        <%= form.submit "Positive"%>
+                    <% end %>
 
-        <%= form_with url: feedback_update_path(purchase.listing.id), local: true, method: :patch do |form| %>
-            <%= form.hidden_field :feedback_for_seller, value: "negative" %>
-            <%= form.submit "Negative"%>
-        <% end %>
-    <% end %>
-<% end %>
+                    <%= form_with url: feedback_update_path(purchase.listing.id), local: true, method: :patch do |form| %>
+                        <%= form.hidden_field :feedback_for_seller, value: "negative" %>
+                        <%= form.submit "Negative"%>
+                    <% end %>
+                <% end %>
+            <% end %>
+        </tbody>
+    </table>
+</div>

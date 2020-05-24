@@ -12,21 +12,36 @@
     <%= link_to "Current Purchase Orders", current_purchase_orders_path %> | 
     <%= link_to "Purchase History", purchase_history_path %>
 
-    <% for listing in @listings %>
-        <ul>
-            <li> <%= link_to  "View Listing", listing_path(listing.id)%> </li>
-            <li>Listing ID: <%= listing.id %> </li>
-            <li>Title: <%= listing.title %> </li>
-            <li>Listing Created At: <%= listing.created_at.strftime("%B %d, %Y") %> </li>
-            <li>Payment Method: <%= listing.payment_method %> </li>
-            <li>Price (BTC/AUD): <%= number_to_currency(listing.price_BTC_AUD) %></li>
-            <li>Amount (AUD): <%= number_to_currency(listing.amount) %></li>
-            
-            <%= link_to "edit", edit_listing_path(listing.id) %>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">ID #</th>
+                <th scope="col">Title</th>
+                <th scope="col">Date</th>
+                <th scope="col">Payment Method</th>
+                <th scope="col">Price (BTC/AUD)</th>
+                <th scope="col">Amount (AUD)</th>
+                <th scope="col"></th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <% for listing in @listings %>
+                <tr>
+                    <td><%= link_to  "#{listing.id}", listing_path(listing.id)%></td>
+                    <td><%=listing.title%></td>
+                    <td><%=listing.created_at.strftime("%d/%m/%y")%></td>
+                    <td><%= listing.payment_method%></li>
+                    <td><%= number_to_currency(listing.price_BTC_AUD)%></td>
+                    <td><%= number_to_currency(listing.amount)%></td>
+                    
+                    <td><%= link_to "edit", edit_listing_path(listing.id), class:"btn btn-primary btn-sm"%></td>
 
-            <%= form_with url: delete_available_listing_path(listing.id), local: true, method: :delete do |form| %>
-                <%= submit_tag "delete"%>
+                    <%= form_with url: delete_available_listing_path(listing.id), local: true, method: :delete do |form| %>
+                        <td><%= submit_tag "delete", class:"btn btn-primary btn-sm"%></td>
+                    <% end %>
+                </tr>
             <% end %>
-        </ul>
-    <% end %>
+        </tbody>
+    </table>
 </div>

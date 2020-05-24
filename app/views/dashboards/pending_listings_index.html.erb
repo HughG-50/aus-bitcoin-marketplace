@@ -31,7 +31,7 @@
                 <tr>
                     <td><%= listing.id %></td>
                     <td><%= listing.title %></td>
-                    <td><%= listing.created_at.strftime("%B %d, %Y") %> </td>
+                    <td><%= listing.created_at.strftime("%d/%m/%y") %> </td>
                     <%# need to access purchase user%>
                     <td><%= listing.purchase.user.username %></td>
                     <td><%= number_to_currency(listing.price_BTC_AUD)%></td>
@@ -41,7 +41,7 @@
                     <% # Form that updates status Enum from :pending_listing to :completed_listing %>
                     <%= form_with url: pending_listings_update_path(listing.id), local: true, method: :patch do |form| %>
                         <%= form.hidden_field :status, value: :completed_listing %>
-                        <td><%= form.submit "I have sent BTC"%></td>
+                        <td><%= form.submit "I have sent BTC", class:"btn btn-primary btn-sm"%></td>
                     <% end %>
                 </tr>
             <% end %>
