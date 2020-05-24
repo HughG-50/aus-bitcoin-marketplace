@@ -10,7 +10,7 @@
 
       <div class="field form-item">
         <%= f.label :password, class:"sr-only" %><br />
-        <%= f.password_field :password, autocomplete: "current-password",placeholder:"Password", class:"form-control" %>
+        <%= f.password_field :password, autocomplete: "current-password", placeholder:"Password", class:"form-control" %>
       </div>
 
       <% if devise_mapping.rememberable? %>
@@ -21,7 +21,7 @@
       <% end %>
 
       <div class="actions form-submit">
-        <%= f.submit "Log in", class: "btn btn-lg btn-primary btn-block"%>
+        <%= f.submit "Log in", class: "btn btn-lg btn-primary btn-block" %>
       </div>
     <% end %>
 
