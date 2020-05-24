@@ -1,30 +1,32 @@
-<h1>Dashboard</h1>
+<div class="container-fluid">
+    <h1>Dashboard</h1>
 
-<h3>Available Listings</h3>
+    <h3>Available Listings</h3>
 
-<h6>Sellers</h6>
-<%= link_to "Pending Listing Completions", pending_listings_path %> |
-<%= link_to "Available Listings", available_listings_path %> | 
-<%= link_to "Completed Listings", completed_listings_path %>
+    <h6>Sellers</h6>
+    <%= link_to "Pending Listing Completions", pending_listings_path %> |
+    <%= link_to "Available Listings", available_listings_path %> | 
+    <%= link_to "Completed Listings", completed_listings_path %>
 
-<h6>Buyers</h6>
-<%= link_to "Current Purchase Orders", current_purchase_orders_path %> | 
-<%= link_to "Purchase History", purchase_history_path %>
+    <h6>Buyers</h6>
+    <%= link_to "Current Purchase Orders", current_purchase_orders_path %> | 
+    <%= link_to "Purchase History", purchase_history_path %>
 
-<% for listing in @listings %>
-    <ul>
-        <li> <%= link_to  "View Listing", listing_path(listing.id)%> </li>
-        <li>Listing ID: <%= listing.id %> </li>
-        <li>Title: <%= listing.title %> </li>
-        <li>Listing Created At: <%= listing.created_at.strftime("%B %d, %Y") %> </li>
-        <li>Payment Method: <%= listing.payment_method %> </li>
-        <li>Price (BTC/AUD): <%= number_to_currency(listing.price_BTC_AUD) %></li>
-        <li>Amount (AUD): <%= number_to_currency(listing.amount) %></li>
-        
-        <%= link_to "edit", edit_listing_path(listing.id) %>
+    <% for listing in @listings %>
+        <ul>
+            <li> <%= link_to  "View Listing", listing_path(listing.id)%> </li>
+            <li>Listing ID: <%= listing.id %> </li>
+            <li>Title: <%= listing.title %> </li>
+            <li>Listing Created At: <%= listing.created_at.strftime("%B %d, %Y") %> </li>
+            <li>Payment Method: <%= listing.payment_method %> </li>
+            <li>Price (BTC/AUD): <%= number_to_currency(listing.price_BTC_AUD) %></li>
+            <li>Amount (AUD): <%= number_to_currency(listing.amount) %></li>
+            
+            <%= link_to "edit", edit_listing_path(listing.id) %>
 
-        <%= form_with url: delete_available_listing_path(listing.id), local: true, method: :delete do |form| %>
-            <%= submit_tag "delete"%>
-        <% end %>
-    </ul>
-<% end %>
+            <%= form_with url: delete_available_listing_path(listing.id), local: true, method: :delete do |form| %>
+                <%= submit_tag "delete"%>
+            <% end %>
+        </ul>
+    <% end %>
+</div>
