@@ -1,16 +1,25 @@
 <div class="container-fluid">
     <h1>Dashboard</h1>
-
-    <h3>Current Purchase Orders</h3>
-
-    <h6>Sellers</h6>
-    <%= link_to "Pending Listing Completions", pending_listings_path %> |
-    <%= link_to "Available Listings", available_listings_path %> | 
-    <%= link_to "Completed Listings", completed_listings_path %>
-
-    <h6>Buyers</h6>
-    <%= link_to "Current Purchase Orders", current_purchase_orders_path %> | 
-    <%= link_to "Purchase History", purchase_history_path %>
+    
+    <div class="dashboard-nav">
+        <ul class="nav nav-pills nav-justified">
+            <li class="nav-item">
+                <%= link_to "Pending Listing Completions", pending_listings_path, class: "nav-link" %>
+            </li>
+            <li class="nav-item">
+                <%= link_to "Available Listings", available_listings_path, class: "nav-link" %>
+            </li>
+            <li class="nav-item">
+                <%= link_to "Completed Listings", completed_listings_path, class: "nav-link" %>
+            </li>
+            <li class="nav-item">
+                <%= link_to "Current Purchase Orders", current_purchase_orders_path, class: "nav-link active" %>
+            </li>
+            <li class="nav-item">
+                <%= link_to "Purchase History", purchase_history_path, class: "nav-link" %>
+            </li>
+        </ul>
+    </div>
 
     <table class="table">
         <thead>

@@ -39,7 +39,7 @@
           <% if user_signed_in? %>
             <%= link_to "Log Out", destroy_user_session_path, class:"btn btn-outline-primary my-2 my-sm-0", :method => :delete %>
           <% else %>
-            <%= link_to("Sign In", new_user_session_path, class:"btn btn-outline-primary my-2 my-sm-0" ) %>
+            <%= link_to "Sign In", new_user_session_path, class:"btn btn-outline-primary my-2 my-sm-0" %>
           <% end %>
         </form>
       </div>
