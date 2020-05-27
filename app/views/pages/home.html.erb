@@ -1,29 +1,34 @@
-<div class="container-fluid">
-    <h5>Want Bitcoin?</h5>
-    
+
     <!-- Main jumbotron for a primary marketing message or call to action -->
     <div class="jumbotron">
         <div class="container">
             <h1 class="display-3">Aus Bitcoin Marketplace</h1>
             <h3>Want Bitcoin?</h3>
-            <p class="mt5"><%= link_to "Buy it here", listings_path, class: "btn btn-primary btn-lg" %></p>
+            <p class="call-to-action"><%= link_to "Buy it here", listings_path, class: "btn btn-primary btn-lg" %></p>
         </div>
     </div>
 
 
 
+<div class="container-fluid">
+    <div class="container">
+        <!-- Example row of columns -->
+        <div class="row">
+            <h2>About</h2>
+            <p>Aus Bitcoin Marketplace is a portfolio project written by <a href="https://hughgreethead.dev/">Hugh Greethead</a> during the Coder Academy bootcamp. 
+            
+            It's purpose is to demonstrate a proof of concept for a simple e-commerce marketplace, with my personal interest in Bitcoin
+            leading me to have my project loosely inspired by <a href="https://localbitcoins.com/">Local Bitcoins</a>.
+            </p>
 
-    <h3>About Aus Bitcoin Marketplace</h3>
-
-    <p>Aus Bitcoin Marketplace is a portfolio project written by Hugh Greethead during the Coder Academy bootcamp.
-    <br>
-    It's purpose is to demonstrate a proof of concept for a simple e-commerce marketplace, with my personal interest in Bitcoin
-    leading me to have my project loosely inspired by <a href="https://localbitcoins.com/">Local Bitcoins</a>
-    </p>
-
-    <p>
-    DISCLAIMER: UNDER NO CIRCUMSTANCES IS THIS WEBSITE TO BE USED TO TRANSACT OR FACILITATE THE TRANSACTION OF BITCOIN OR ANY OTHER MONETARY INSTRUMENT.
-    </p>
+            <p>
+            <b>DISCLAIMER:</b> under no circumstances is this website to be used to transact or facilitate the transaction of bitcoin or any other monetary instrument.
+            For demonstrative purposes only.
+            </p>
+          
+        </div>
+        <hr>
+      </div> <!-- /container -->
 
     <h3>New Listings</h3>
 
@@ -64,5 +69,5 @@
 
     
 
-    <%= link_to  "See more..", listings_path %>
+    <%= link_to  "See more..", listings_path, class: "btn btn-primary btn-sm" %>
 </div>
