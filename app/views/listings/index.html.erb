@@ -17,21 +17,21 @@
         <tbody>
             <% for listing in @listings %>
                 <tr>
-                <td><%= link_to "#{listing.user.username}", user_path(listing.user.id) %></td>
-                <td><%= listing.title %> </td>
-                <% if listing.user.feedback_score != nil%>
-                    <td><%= listing.user.num_completed_listings %> listing(s) sold; <%= number_to_percentage(listing.user.feedback_score*100, precision: 1) %> </td>
-                <% else %>
-                    <td><%= listing.user.num_completed_listings %> listing(s) sold; No feedback acquired;
-                <% end %>
-                <td><%= listing.payment_method %></td>
-                <td><%= number_to_currency(listing.price_BTC_AUD) %></td>
-                <td><%= number_to_currency(listing.amount) %></td>
-                <% if user_signed_in? %>
-                    <td> <%= link_to "View", listing_path(listing.id), class: "btn btn-primary btn-sm" %> </td>
-                <% else %>
-                    <td> <%= link_to "Buy", show_basic_path(listing.id), class: "btn btn-primary btn-sm" %> </td>
-                <% end %>
+                    <td><%= link_to "#{listing.user.username}", user_path(listing.user.id) %></td>
+                    <td><%= listing.title %> </td>
+                    <% if listing.user.feedback_score != nil%>
+                        <td><%= listing.user.num_completed_listings %> listing(s) sold; <%= number_to_percentage(listing.user.feedback_score*100, precision: 1) %> </td>
+                    <% else %>
+                        <td><%= listing.user.num_completed_listings %> listing(s) sold; No feedback acquired;
+                    <% end %>
+                    <td><%= listing.payment_method %></td>
+                    <td><%= number_to_currency(listing.price_BTC_AUD) %></td>
+                    <td><%= number_to_currency(listing.amount) %></td>
+                    <% if user_signed_in? %>
+                        <td> <%= link_to "View", listing_path(listing.id), class: "btn btn-primary btn-sm" %> </td>
+                    <% else %>
+                        <td> <%= link_to "Buy", show_basic_path(listing.id), class: "btn btn-primary btn-sm" %> </td>
+                    <% end %>
                 </tr>
             <% end %>
         </tbody>

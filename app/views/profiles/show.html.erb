@@ -1,30 +1,82 @@
-<h1> <%= @user.username %> </h1>
-
-<% if @user.picture.attached? %>
-    <%= image_tag @user.picture %>
-<% else %>
-    <%= image_tag  "https://i.stack.imgur.com/34AD2.jpg"%>
+<% if @user.errors.any? %>
+    <% @user.errors.full_messages.each do |error| %>
+        <p><%= error %></p>
+    <% end %>
 <% end %>
 
-<%= link_to  "Login Details", edit_user_registration_path(@user.id)%>
-<%= link_to  "Edit Profile", edit_profile_path(@user.id)%>
+<div class="grid">
+    <div class="d-flex flex-column align-items-center justify-content-center">
+        <div class="mb-3 mt-3">
+            <h1> <%= @user.username %> </h1>
+        </div>
 
-<ul>
-    <li> Bitcoin address: <%= @user.btc_address %> </li>
-    <li> Bio: <%= @user.bio %> </li>
-</ul>
+        <div>
+            <%= link_to  "Login Details", edit_user_registration_path(@user.id)%>
+            <%= link_to  "Edit Profile", edit_profile_path(@user.id)%>
+        </div>
 
-<h3> Information on <%= @user.username %> </h3>
+        <div class="profile-picture">
+            <% if @user.picture.attached? %>
+                <%= image_tag @user.picture %>
+            <% else %>
+                <%= image_tag  "https://i.stack.imgur.com/34AD2.jpg"%>
+            <% end %>
+        </div>
+        
 
-<ul>
-    <% if @user.feedback_score != nil%>
-        <li>Reputation score: <%= @user.num_completed_listings %> listing(s) sold; <%= number_to_percentage(@user.feedback_score*100, precision: 1) %> </li>
-    <% else %>
-        <li>Reputation score: <%= @user.num_completed_listings %> listing(s) sold; No feedback acquired;
-    <% end %>
-    <li>Number of BTC purchases: <%= @user.num_btc_purchases %> </li>
-    <li>Number of BTC listings sold: <%= @user.num_completed_listings %> </li>
-    <li>Account Created: <%= @user.created_at.strftime("%B %d, %Y") %> </li>
-    <li>Country: <%= @user.country %> </li>
-    <li>City: <%= @user.city %> </li>
-</ul>
+        <div class="card w-50 position-relative mb-5">
+            <div class="card-header">
+                Bio
+            </div>
+            <div class="card-body">
+                <%= @user.bio %>
+            </div>
+            <div class="card-header">
+                Bitcoin address
+            </div>
+            <div class="card-body">
+                <%= @user.btc_address %> 
+            </div>
+            <div class="card-header">
+                Reputation score
+            </div>
+            <div class="card-body">
+                <% if @user.feedback_score != nil%>
+                    <%= @user.num_completed_listings %> listing(s) sold; <%= number_to_percentage(@user.feedback_score*100, precision: 1) %> </li>
+                <% else %>
+                    <%= @user.num_completed_listings %> listing(s) sold; No feedback acquired;
+                <% end %>
+            </div>
+            <div class="card-header">
+                Number of BTC purchases
+            </div>
+            <div class="card-body">
+                <%= @user.num_btc_purchases %> 
+            </div>
+            <div class="card-header">
+                Number of BTC listings sold
+            </div>
+            <div class="card-body">
+                <%= @user.num_completed_listings %>
+            </div>
+            <div class="card-header">
+                Account Created
+            </div>
+            <div class="card-body">
+                <%= @user.created_at.strftime("%B %d, %Y") %>
+            </div>
+            <div class="card-header">
+                Country
+            </div>
+            <div class="card-body">
+                <%= @user.country %>
+            </div>
+            <div class="card-header">
+                City
+            </div>
+            <div class="card-body">
+                <%= @user.city %>
+            </div>
+        </div>
+    </div>
+</div>
