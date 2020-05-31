@@ -1,12 +1,18 @@
-
-    <!-- Main jumbotron for a primary marketing message or call to action -->
-    <div class="jumbotron">
-        <div class="container">
-            <h1 class="display-3">Aus Bitcoin Marketplace</h1>
-            <h3>Want Bitcoin?</h3>
-            <p class="call-to-action"><%= link_to "Buy it here", listings_path, class: "btn btn-primary btn-lg" %></p>
+<!-- Main jumbotron for a primary marketing message or call to action -->
+<div class="jumbotron">
+    <div class="container">
+        <h1 class="display-3">Aus Bitcoin Marketplace</h1>
+        <div class="home-picture-container"> 
+            <div class="call-to-action-container">
+                <h2>Want Bitcoin?</h2>
+                <p class="call-to-action"><%= link_to "Buy it here", listings_path, class: "btn btn-primary btn-lg" %></p>
+            </div>
+            <%= image_tag("bitcoin_logo.png", :alt => "Bitcoin Logo") %>
         </div>
+        
+        
     </div>
+</div>
 
 
 
@@ -15,20 +21,20 @@
         <!-- Example row of columns -->
         <div class="row">
             <h2>About</h2>
-            <p>Aus Bitcoin Marketplace is a portfolio project written by <a href="https://hughgreethead.dev/">Hugh Greethead</a> during the Coder Academy bootcamp. 
-            
-            It's purpose is to demonstrate a proof of concept for a simple e-commerce marketplace, with my personal interest in Bitcoin
-            leading me to have my project loosely inspired by <a href="https://localbitcoins.com/">Local Bitcoins</a>.
+            <p>Aus Bitcoin Marketplace is a portfolio project written by <a href="https://hughgreethead.dev/">Hugh Greethead</a> during the Coder Academy bootcamp.
+
+                It's purpose is to demonstrate a proof of concept for a simple e-commerce marketplace, with my personal interest in Bitcoin
+                leading me to have my project loosely inspired by <a href="https://localbitcoins.com/">Local Bitcoins</a>.
             </p>
 
             <p>
-            <b>DISCLAIMER:</b> under no circumstances is this website to be used to transact or facilitate the transaction of bitcoin or any other monetary instrument.
-            For demonstrative purposes only.
+                <b>DISCLAIMER:</b> under no circumstances is this website to be used to transact or facilitate the transaction of bitcoin or any other monetary instrument.
+                For demonstrative purposes only.
             </p>
-          
+
         </div>
         <hr>
-      </div> <!-- /container -->
+    </div> <!-- /container -->
 
     <h3>New Listings</h3>
 
@@ -46,28 +52,28 @@
         </thead>
         <tbody>
             <% @listings.take(4).each do |listing| %>
-                <tr>
+            <tr>
                 <td><%= link_to "#{listing.user.username}", user_path(listing.user.id) %></td>
                 <td><%= listing.title %> </td>
                 <% if listing.user.feedback_score != nil%>
-                    <td><%= listing.user.num_completed_listings %> listing(s) sold; <%= number_to_percentage(listing.user.feedback_score*100, precision: 1) %> </td>
+                <td><%= listing.user.num_completed_listings %> listing(s) sold; <%= number_to_percentage(listing.user.feedback_score*100, precision: 1) %> </td>
                 <% else %>
-                    <td><%= listing.user.num_completed_listings %> listing(s) sold; No feedback acquired;
-                <% end %>
+                <td><%= listing.user.num_completed_listings %> listing(s) sold; No feedback acquired;
+                    <% end %>
                 <td><%= listing.payment_method %></td>
                 <td><%= number_to_currency(listing.price_BTC_AUD) %></td>
                 <td><%= number_to_currency(listing.amount) %></td>
                 <% if user_signed_in? %>
-                    <td> <%= link_to "View", listing_path(listing.id), class: "btn btn-primary btn-sm" %> </td>
+                <td> <%= link_to "View", listing_path(listing.id), class: "btn btn-primary btn-sm" %> </td>
                 <% else %>
-                    <td> <%= link_to "Buy", show_basic_path(listing.id), class: "btn btn-primary btn-sm" %> </td>
+                <td> <%= link_to "Buy", show_basic_path(listing.id), class: "btn btn-primary btn-sm" %> </td>
                 <% end %>
-                </tr>
+            </tr>
             <% end %>
         </tbody>
     </table>
 
-    
+
 
     <%= link_to  "See more..", listings_path, class: "btn btn-primary btn-sm" %>
 </div>
