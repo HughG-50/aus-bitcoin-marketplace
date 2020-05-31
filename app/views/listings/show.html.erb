@@ -1,31 +1,78 @@
-<h2>Buy Bitcoins</h2>
+<div class="grid">
+    <div class="d-flex flex-column align-items-center justify-content-center">
+        <h2>Buy Bitcoins</h2>
 
-<h4> <%= @listing.title %> </h4>
+        <h4> <%= @listing.title %> </h4>
 
-<ul>
-    <li> <%= link_to "#{@listing.user.username}",  user_path(@listing.user.id) %> </li>
-    <% if @listing.user.feedback_score != nil%>
-        <li>Reputation score: <%= @listing.user.num_completed_listings %> listing(s) sold; <%= number_to_percentage(@listing.user.feedback_score*100, precision: 1) %> </li>
-    <% else %>
-        <li>Reputation score: <%= @listing.user.num_completed_listings %> listing(s) sold; No feedback acquired;
-    <% end %>
-    <li> Price/BTC: <%= number_to_currency(@listing.price_BTC_AUD) %> </li>
-    <li> Amount: <%= number_to_currency(@listing.amount) %> </li>
-    <li> Payment Method: <%= @listing.payment_method %> </li>
-    <li> Location: <%= @listing.user.city %>, <%= @listing.user.country %> </li>
-    <li> Description: <%= @listing.description %> </li>
-</ul>
+        <div class="card w-50 position-relative mb-5">
+            <div class="card-header">
+                Listing User Profile
+            </div>
+            <div class="card-body">
+                <%= link_to "#{@listing.user.username}",  user_path(@listing.user.id) %> 
+            </div>
+            <div class="card-header">
+                Reputation Score
+            </div>
+            <div class="card-body">
+                <% if @listing.user.feedback_score != nil%>
+                    <%= @listing.user.num_completed_listings %> listing(s) sold; <%= number_to_percentage(@listing.user.feedback_score*100, precision: 1) %>
+                <% else %>
+                    <%= @listing.user.num_completed_listings %> listing(s) sold; No feedback acquired;
+                <% end %>
+            </div>
+            <div class="card-header">
+                Price/BTC
+            </div>
+            <div class="card-body">
+                <%= number_to_currency(@listing.price_BTC_AUD) %> 
+            </div>
+            <div class="card-header">
+                Amount
+            </div>
+            <div class="card-body">
+                <%= number_to_currency(@listing.amount) %> 
+            </div>
+            <div class="card-header">
+                Payment Method
+            </div>
+            <div class="card-body">
+                <%= @listing.payment_method %> 
+            </div>
+            <div class="card-header">
+                Location
+            </div>
+            <div class="card-body">
+                <%= @listing.user.city %>, <%= @listing.user.country %> 
+            </div>
+            <div class="card-header">
+                Description
+            </div>
+            <div class="card-body">
+                <%= @listing.description %>  
+            </div>
+        </div>
+        <% if current_user == @listing.user && @listing.status == "available_listing"%>
+            <div class="d-flex show-listing-buttons">
+                <%= link_to "edit", edit_listing_path(@listing.id), class: "btn btn-primary btn-lg" %>
+                <%= form_with model: @listing, local: true, method: "delete" do |form| %>
+                    <%= submit_tag "delete", class: "btn btn-primary btn-lg" %>
+                <% end %>
+            <div>
+        <% elsif current_user == @listing.user%>
+        <% else %>
+            <%= form_with url: create_purchase_path(@listing.id), local: true, method: :post do |form|%>
+                <%= form.submit "Buy Listing", class: "btn btn-lg btn-primary btn-block" %>
+            <% end %>
+        <% end %>
+        <br>
+        <br>
+    </div>
+</div>
 
-<% if current_user == @listing.user && @listing.status == "available_listing"%>
-    <%= link_to "edit", edit_listing_path(@listing.id) %>
-    <%= form_with model: @listing, local: true, method: "delete" do |form| %>
-        <%= submit_tag "delete" %>
-    <% end %>
-<% elsif current_user == @listing.user%>
-<% else %>
-    (Stripe FORMS TO BE ADDED) 
-    <%= form_with url: create_purchase_path(@listing.id), local: true, method: :post do |form|%>
-        <%= form.submit "Buy", class: "btn btn-lg btn-primary btn-block" %>
-    <% end %>
-<% end %>
+
+
+
+
+
 
