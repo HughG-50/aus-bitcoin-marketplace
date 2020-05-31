@@ -1,55 +1,58 @@
 <!DOCTYPE html>
 <html>
-  <head>
+
+<head>
     <title>AusBitcoinMarketplace</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
-  </head>
+    <%= favicon_link_tag asset_path('bitcoin_favicon.ico') %>
+</head>
 
-    <header>
+<header>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
 
-      <div class="collapse navbar-collapse" id="navbarColor01">
-        <ul class="navbar-nav mr-auto">
-          <li class="nav-item">
-            <%= link_to "Aus-Bitcoin-Marketplace", root_path, class:"nav-link" %>
-          </li>
-          <li class="nav-item">
-            <%= link_to "Buy", listings_path, class: "nav-link" %>
-          </li>
-          <% if user_signed_in? %>
-            <li class="nav-item">
-            <%= link_to "Sell", new_listing_path, class: "nav-link" %>
-            </li>
-            <li class="nav-item">
-              <%= link_to "Profile", user_show_path(current_user.id), class:"nav-link" %>
-            </li>
-            <li class="nav-item">
-            <%= link_to "Dashboard", pending_listings_path, class: "nav-link" %>
-          </li>
-          <% end %>
-        </ul>
-        <form class="form-inline">
-          <% if user_signed_in? %>
-            <%= link_to "Log Out", destroy_user_session_path, class:"btn btn-outline-primary my-2 my-sm-0", :method => :delete %>
-          <% else %>
-            <%= link_to "Sign In", new_user_session_path, class:"btn btn-outline-primary my-2 my-sm-0" %>
-          <% end %>
-        </form>
-      </div>
+        <div class="collapse navbar-collapse" id="navbarColor01">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <%= link_to "Aus-Bitcoin-Marketplace", root_path, class:"nav-link" %>
+                </li>
+                <li class="nav-item">
+                    <%= link_to "Buy", listings_path, class: "nav-link" %>
+                </li>
+                <% if user_signed_in? %>
+                <li class="nav-item">
+                    <%= link_to "Sell", new_listing_path, class: "nav-link" %>
+                </li>
+                <li class="nav-item">
+                    <%= link_to "Profile", user_show_path(current_user.id), class:"nav-link" %>
+                </li>
+                <li class="nav-item">
+                    <%= link_to "Dashboard", pending_listings_path, class: "nav-link" %>
+                </li>
+                <% end %>
+            </ul>
+            <form class="form-inline">
+                <% if user_signed_in? %>
+                <%= link_to "Log Out", destroy_user_session_path, class:"btn btn-outline-primary my-2 my-sm-0", :method => :delete %>
+                <% else %>
+                <%= link_to "Sign In", new_user_session_path, class:"btn btn-outline-primary my-2 my-sm-0" %>
+                <% end %>
+            </form>
+        </div>
     </nav>
-  </header>
+</header>
 
 
-  <body>
+<body>
     <%= yield %>
     <p class="notice"><%= notice %></p>
     <p class="alert"><%= alert %></p>
-  </body>
+</body>
+
 </html>
